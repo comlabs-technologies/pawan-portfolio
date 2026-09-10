@@ -27,6 +27,9 @@ export function ExperienceItem({ item, index }: { item: Experience; index: numbe
         <p className="mt-0.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
           <span className="text-label font-medium text-ink-2">{item.role}</span>
           <span className="text-meta text-ink-3">{item.period}</span>
+          {item.location ? (
+            <span className="text-meta text-ink-3">{item.location}</span>
+          ) : null}
         </p>
         <p className="mt-1.5 max-w-[62ch] text-label text-ink-2">{item.summary}</p>
 

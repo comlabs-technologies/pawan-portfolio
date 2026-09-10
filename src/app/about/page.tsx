@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SectionFrame } from "@/components/SectionFrame";
-import { TravelGallery } from "@/components/TravelGallery";
+import { PrincipleList } from "@/components/PrincipleList";
 import { Timeline } from "@/components/Timeline";
 import { Reveal } from "@/components/Reveal";
+import { credentials } from "@/data/credentials";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -25,56 +26,29 @@ export default function AboutPage() {
 
       <Reveal className="mt-6 space-y-4" delay={0.1}>
         <p className="max-w-[64ch] text-label text-ink-2">
-          I started out building marketing sites for founders who could not afford a studio,
-          which taught me more about constraints than any course would have. These days I work
-          on the parts of a product people use every day: tables that hold ten thousand rows,
-          forms that survive a dropped connection, and the design system that keeps the rest of
-          it coherent.
+          My work spans frontend engineering, full-stack development, cloud
+          infrastructure, product discovery and client communication. In practice that
+          means sitting in the conversation where a business process is described out
+          loud, and staying with it until there is something in production that the team
+          uses every day.
         </p>
         <p className="max-w-[64ch] text-label text-ink-2">
-          I am based in {site.location}, and I spend an unreasonable amount of my spare time
-          walking up hills in order to look at other hills. The photographs below are from that
-          habit — drag them around, they are not precious.
+          I am based in {site.location}, and I currently work as a software engineer at
+          Vionsys IT Solutions, where I own the company website and client-facing web
+          products. Before that I worked directly with founders across education,
+          professional networking, enterprise services and ecommerce.
         </p>
       </Reveal>
 
-      <section aria-labelledby="travel-heading" className="mt-12">
-        <SectionHeading id="travel-heading">Places I have wandered</SectionHeading>
-        <p className="mt-2 text-meta text-ink-3">
-          Drag a photograph to move it. Everything stays where you leave it.
-        </p>
-        <div className="mt-4">
-          <TravelGallery />
-        </div>
+      <section aria-labelledby="principles-heading" className="mt-12">
+        <SectionHeading id="principles-heading">How I work</SectionHeading>
+        <PrincipleList />
       </section>
 
-      <SectionFrame aria-labelledby="timeline-heading">
-        <SectionHeading id="timeline-heading">Milestones</SectionHeading>
-        <Timeline />
+      <SectionFrame aria-labelledby="credentials-heading">
+        <SectionHeading id="credentials-heading">Education and leadership</SectionHeading>
+        <Timeline groups={credentials} />
       </SectionFrame>
-
-      <section aria-labelledby="values-heading" className="mt-10">
-        <SectionHeading id="values-heading">How I like to work</SectionHeading>
-        <Reveal className="mt-4" delay={0.08}>
-          <ul className="max-w-[64ch] space-y-3 text-label text-ink-2">
-            <li>
-              <span className="font-medium text-ink">Measure before rewriting.</span> Most
-              performance problems are not where the team assumes they are, and an afternoon
-              with a profiler routinely saves a fortnight of refactoring.
-            </li>
-            <li>
-              <span className="font-medium text-ink">Write it down.</span> A short decision
-              record beats a long meeting, and the person it helps most is usually me, six
-              months later.
-            </li>
-            <li>
-              <span className="font-medium text-ink">Ship the unglamorous part.</span> Empty
-              states, error copy, and keyboard focus are the difference between a demo and a
-              product.
-            </li>
-          </ul>
-        </Reveal>
-      </section>
     </>
   );
 }

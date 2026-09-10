@@ -10,40 +10,42 @@ export type SocialLink = {
 };
 
 export const site = {
-  name: "Pawan Kumar",
+  name: "Pawan Mishra",
   shortName: "Pawan",
   role: "Software Engineer",
   /** Cycled by the rotating badge next to the name. */
   roles: [
     "Software Engineer",
     "Full Stack Engineer",
-    "Design Engineer",
     "Frontend Engineer",
     "Product Engineer",
+    "Technical Consultant",
   ],
-  location: "Bengaluru, India",
-  email: "hello@pawan.build",
-  url: "https://pawan.build",
+  headline: "Building what actually moves businesses: Interfaces to AI workflows",
+  location: "Pune, Maharashtra, India",
+  url: "https://pawan-ivory.vercel.app",
   avatar: "/images/people/pawan.png",
   intro:
-    "I build product interfaces for teams that care about detail. Mostly TypeScript, design systems, and the unglamorous work that makes an app feel fast.",
+    "I build the interfaces and technical workflows that move businesses forward — from polished product experiences to cloud-backed operational systems.",
   aboutIntro:
-    "I have spent the last eight years shipping interfaces for data-heavy products — the kind where a 200ms regression is a support ticket. I care about typography, state machines, and writing the boring code that lets a team move quickly.",
+    "I am a product-minded software engineer who works directly with founders and business teams. I turn loosely defined operational problems into usable interfaces, workflows and production systems.",
   availability:
-    "I am taking on one contract engagement per quarter, and I always read a note about an interesting product problem.",
+    "I work with founders and business teams on interfaces, workflows and production systems. If you have a process that needs to become software, send me a note.",
   description:
-    "Pawan Kumar is a software engineer working on design systems, product interfaces, and front-end performance.",
+    "Pawan Mishra is a product-minded software engineer in Pune, working across frontend engineering, full-stack development, cloud infrastructure and product discovery.",
 } as const;
 
 export const navItems: NavItem[] = [
   { label: "About", href: "/about" },
   { label: "Projects", href: "/projects" },
-  { label: "Blog", href: "/blog" },
+  { label: "Thinking", href: "/thinking" },
   { label: "Contact", href: "/contact" },
 ];
 
+/**
+ * Only verified profiles are listed. Controls for unverified accounts stay
+ * hidden until a confirmed URL is supplied.
+ */
 export const socials: SocialLink[] = [
-  { label: "X", href: "https://x.com/", icon: "x" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/", icon: "linkedin" },
-  { label: "GitHub", href: "https://github.com/", icon: "github" },
+  { label: "LinkedIn", href: "https://in.linkedin.com/in/pmbpgc7", icon: "linkedin" },
 ];

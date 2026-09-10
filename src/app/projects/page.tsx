@@ -6,7 +6,7 @@ import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 
 const description =
-  "Six projects where the interesting problem was in the interface: rendering, latency, state, and the design system holding it together.";
+  "Product work with founders and client teams: platforms, company websites, storefronts, operational systems and research.";
 
 export const metadata: Metadata = {
   title: "Projects",

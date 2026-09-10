@@ -7,148 +7,7 @@ import {
 
 const OUT = path.join(process.cwd(), "public", "images");
 fs.mkdirSync(path.join(OUT, "projects"), { recursive: true });
-fs.mkdirSync(path.join(OUT, "travel"), { recursive: true });
 fs.mkdirSync(path.join(OUT, "people"), { recursive: true });
-
-/* ------------------------------------------------------------------ *
- * Travel scenes — procedural landscapes, one palette per destination.
- * ------------------------------------------------------------------ */
-function travelScene(file, seed, palette) {
-  const W = 600;
-  const H = 750;
-  const s = new Surface(W, H);
-  const noise = makeNoise(seed);
-  const rnd = mulberry(seed * 7 + 13);
-
-  const skyTop = hex(palette.skyTop);
-  const skyBottom = hex(palette.skyBottom);
-  const horizon = H * palette.horizon;
-
-  // Sky
-  for (let y = 0; y < H; y++) {
-    const t = smoothstep(clamp(y / horizon, 0, 1));
-    const c = mixRgb(skyTop, skyBottom, t);
-    for (let x = 0; x < W; x++) s.set(x, y, c[0], c[1], c[2]);
-  }
-
-  // Sun / light source with atmospheric glow
-  const sunX = W * palette.sunX;
-  const sunY = horizon * palette.sunY;
-  const sunColor = hex(palette.sun);
-  for (let y = 0; y < Math.ceil(horizon) + 40; y++) {
-    for (let x = 0; x < W; x++) {
-      const d = Math.hypot(x - sunX, (y - sunY) * 1.15) / (W * 0.75);
-      const glow = Math.pow(clamp(1 - d, 0, 1), 3.2) * 0.85;
-      if (glow > 0.002) s.blend(x, y, sunColor[0], sunColor[1], sunColor[2], glow);
-    }
-  }
-  circle(s, sunX, sunY, W * 0.055, sunColor, 0.9, 2.4);
-
-  // Cloud bands
-  for (let y = 0; y < horizon; y++) {
-    for (let x = 0; x < W; x++) {
-      const n = fbm(noise, x / 150 + seed, y / 46, 4);
-      const band = Math.pow(clamp((n - 0.5) * 2.6, 0, 1), 1.6);
-      const fade = smoothstep(clamp(1 - y / horizon, 0, 1)) * 0.55 + 0.15;
-      const c = hex(palette.cloud);
-      if (band > 0.01) s.blend(x, y, c[0], c[1], c[2], band * fade * 0.5);
-    }
-  }
-
-  // Layered terrain
-  palette.layers.forEach((layer, index) => {
-    const base = horizon + H * layer.offset;
-    const color = hex(layer.color);
-    const amp = H * layer.amp;
-    const phase = rnd() * 100;
-    for (let x = 0; x < W; x++) {
-      const t = x / W;
-      const ridge =
-        Math.sin(t * Math.PI * layer.freq + phase) * amp +
-        Math.sin(t * Math.PI * layer.freq * 2.7 + phase * 1.7) * amp * 0.42 +
-        (fbm(noise, x / 110 + index * 30, index * 12, 3) - 0.5) * amp * 1.5;
-      const top = base - ridge;
-      for (let y = Math.max(0, Math.floor(top)); y < H; y++) {
-        const cov = y === Math.floor(top) ? clamp(1 - (top - Math.floor(top)), 0, 1) : 1;
-        const depth = clamp((y - top) / (H * 0.5), 0, 1);
-        const shade = mixRgb(color, hex(layer.shade ?? layer.color), depth);
-        s.blend(x, y, shade[0], shade[1], shade[2], cov * (layer.alpha ?? 1));
-      }
-    }
-  });
-
-  // Water reflection / foreground haze
-  if (palette.water) {
-    const wTop = H * palette.water.top;
-    const wc = hex(palette.water.color);
-    for (let y = Math.floor(wTop); y < H; y++) {
-      for (let x = 0; x < W; x++) {
-        const ripple = fbm(noise, x / 90, y / 8 + seed, 3);
-        const a = clamp((y - wTop) / (H - wTop), 0, 1) * 0.55 + ripple * 0.14;
-        s.blend(x, y, wc[0], wc[1], wc[2], clamp(a, 0, 0.9) * 0.85);
-      }
-    }
-  }
-
-  // Air haze near the horizon
-  const haze = hex(palette.skyBottom);
-  for (let y = 0; y < H; y++) {
-    const a = Math.pow(clamp(1 - Math.abs(y - horizon) / (H * 0.22), 0, 1), 2) * 0.3;
-    if (a <= 0) continue;
-    for (let x = 0; x < W; x++) s.blend(x, y, haze[0], haze[1], haze[2], a);
-  }
-
-  vignette(s, 0.22);
-  grain(s, seed + 991, 4);
-  s.saveIndexed(path.join(OUT, "travel", file), 128);
-}
-
-const travelPalettes = [
-  { file: "kyoto.png", seed: 21, p: { skyTop: "#2b2350", skyBottom: "#f0a189", horizon: 0.52, sun: "#ffd9a8", sunX: 0.7, sunY: 0.82, cloud: "#f6c9c0",
-    layers: [
-      { offset: -0.02, amp: 0.055, freq: 2.1, color: "#5c4a72", shade: "#3a2f4c", alpha: 0.95 },
-      { offset: 0.04, amp: 0.04, freq: 3.4, color: "#3d3455", shade: "#241f36" },
-      { offset: 0.13, amp: 0.03, freq: 5.2, color: "#221d33", shade: "#14111f" },
-    ], water: { top: 0.72, color: "#2a2440" } } },
-  { file: "lofoten.png", seed: 34, p: { skyTop: "#0f2a3d", skyBottom: "#7fb8c9", horizon: 0.46, sun: "#e8f4f2", sunX: 0.28, sunY: 0.6, cloud: "#cfe4ea",
-    layers: [
-      { offset: -0.03, amp: 0.08, freq: 1.6, color: "#5f7d8c", shade: "#33495a" },
-      { offset: 0.05, amp: 0.05, freq: 2.9, color: "#3b5566", shade: "#1e2f3d" },
-      { offset: 0.16, amp: 0.02, freq: 6.1, color: "#1b2733", shade: "#0f161d" },
-    ], water: { top: 0.7, color: "#20384a" } } },
-  { file: "lisbon.png", seed: 47, p: { skyTop: "#1d4f78", skyBottom: "#f6c48b", horizon: 0.55, sun: "#ffe0ae", sunX: 0.5, sunY: 0.88, cloud: "#ffd2b0",
-    layers: [
-      { offset: 0.0, amp: 0.03, freq: 4.2, color: "#c98f6a", shade: "#8a5b45" },
-      { offset: 0.09, amp: 0.025, freq: 6.8, color: "#8d5f4c", shade: "#4f342c" },
-      { offset: 0.19, amp: 0.018, freq: 9.4, color: "#4c332c", shade: "#28191a" },
-    ], water: { top: 0.76, color: "#3a4f63" } } },
-  { file: "reykjavik.png", seed: 58, p: { skyTop: "#101a2e", skyBottom: "#4c6d7e", horizon: 0.44, sun: "#9fe6c8", sunX: 0.62, sunY: 0.45, cloud: "#79c3a6",
-    layers: [
-      { offset: 0.0, amp: 0.06, freq: 1.9, color: "#41525d", shade: "#212c36" },
-      { offset: 0.1, amp: 0.03, freq: 3.6, color: "#2a343d", shade: "#151b21" },
-      { offset: 0.22, amp: 0.02, freq: 7.2, color: "#171d24", shade: "#0c0f14" },
-    ], water: { top: 0.78, color: "#1a242f" } } },
-  { file: "jaipur.png", seed: 69, p: { skyTop: "#3d2a55", skyBottom: "#f2b06a", horizon: 0.5, sun: "#ffd07a", sunX: 0.35, sunY: 0.78, cloud: "#f0b9a0",
-    layers: [
-      { offset: -0.01, amp: 0.045, freq: 2.6, color: "#a75f4d", shade: "#6d3a33" },
-      { offset: 0.08, amp: 0.03, freq: 4.8, color: "#7a4238", shade: "#43231f" },
-      { offset: 0.2, amp: 0.02, freq: 8.1, color: "#3d211e", shade: "#1f1010" },
-    ] } },
-  { file: "hakone.png", seed: 73, p: { skyTop: "#243a4d", skyBottom: "#cfd9d4", horizon: 0.48, sun: "#f2ece0", sunX: 0.44, sunY: 0.7, cloud: "#e8eeea",
-    layers: [
-      { offset: -0.02, amp: 0.07, freq: 1.4, color: "#8ca09c", shade: "#4f6360" },
-      { offset: 0.06, amp: 0.045, freq: 2.6, color: "#5b6f6d", shade: "#2f3d3d" },
-      { offset: 0.17, amp: 0.025, freq: 5.5, color: "#33403f", shade: "#1a2222" },
-    ], water: { top: 0.74, color: "#2c3a3c" } } },
-  { file: "dolomites.png", seed: 88, p: { skyTop: "#1a2b4a", skyBottom: "#e6a徐8".replace("徐", "9"), horizon: 0.5, sun: "#ffdcae", sunX: 0.74, sunY: 0.74, cloud: "#f0c9b4",
-    layers: [
-      { offset: -0.04, amp: 0.09, freq: 1.8, color: "#9b8a92", shade: "#5c4f5c" },
-      { offset: 0.05, amp: 0.05, freq: 3.1, color: "#5f5462", shade: "#332d3a" },
-      { offset: 0.18, amp: 0.028, freq: 6.4, color: "#2e2833", shade: "#17141c" },
-    ] } },
-];
-
-for (const t of travelPalettes) travelScene(t.file, t.seed, t.p);
 
 /* ------------------------------------------------------------------ *
  * Project artwork — abstract, structural compositions.
@@ -268,18 +127,24 @@ function projectArt(file, seed, spec) {
 }
 
 const projects = [
-  { file: "atlas-analytics.png", seed: 101, spec: { motif: "panels", ink: "#0b1220", accent: "#3b82f6", panel: "#f8fafc",
+  { file: "formial-platform.png", seed: 101, spec: { motif: "panels", ink: "#0b1220", accent: "#3b82f6", panel: "#f8fafc",
     mesh: [{ color: "#dbe4f0" }, { color: "#b9cbe8", x: 0.2, y: 0.2, r: 0.8, a: 0.9 }, { color: "#e9eef6", x: 0.85, y: 0.8, r: 0.7 }] } },
-  { file: "meridian-design-system.png", seed: 202, spec: { motif: "grid", ink: "#141414", accent: "#f0a24a", panel: "#ffffff",
-    mesh: [{ color: "#f0ece6" }, { color: "#e2d8c8", x: 0.8, y: 0.25, r: 0.85 }, { color: "#faf7f3", x: 0.15, y: 0.85, r: 0.7 }] } },
-  { file: "harbor-payments.png", seed: 303, spec: { motif: "stack", ink: "#0a1a1a", accent: "#14b8a6", panel: "#f6fffd",
+  { file: "vionsys-platform.png", seed: 202, spec: { motif: "grid", ink: "#141414", accent: "#3f6f9e", panel: "#ffffff",
+    mesh: [{ color: "#e8ecf1" }, { color: "#ccd7e2", x: 0.8, y: 0.25, r: 0.85 }, { color: "#f7f9fb", x: 0.15, y: 0.85, r: 0.7 }] } },
+  { file: "global-services-enterprise.png", seed: 303, spec: { motif: "stack", ink: "#0a1a1a", accent: "#14b8a6", panel: "#f6fffd",
     mesh: [{ color: "#cfe7e3" }, { color: "#a7d4cd", x: 0.25, y: 0.75, r: 0.9 }, { color: "#e8f6f3", x: 0.8, y: 0.2, r: 0.75 }] } },
-  { file: "signal-observability.png", seed: 404, spec: { motif: "wave", ink: "#111827", accent: "#8b5cf6", panel: "#ffffff",
-    mesh: [{ color: "#1b1830" }, { color: "#3a2f63", x: 0.7, y: 0.3, r: 0.9 }, { color: "#141225", x: 0.2, y: 0.85, r: 0.8 }] } },
-  { file: "cadence-scheduling.png", seed: 505, spec: { motif: "orbit", ink: "#1a1208", accent: "#ef7d57", panel: "#fffaf5",
-    mesh: [{ color: "#f3e4d8" }, { color: "#e6c8b3", x: 0.65, y: 0.5, r: 0.85 }, { color: "#fdf6f0", x: 0.1, y: 0.15, r: 0.7 }] } },
-  { file: "quill-editor.png", seed: 606, spec: { motif: "terminal", ink: "#0f172a", accent: "#22c55e", panel: "#0d1117",
-    mesh: [{ color: "#101821" }, { color: "#1d2b3a", x: 0.3, y: 0.25, r: 0.9 }, { color: "#0a0f16", x: 0.85, y: 0.85, r: 0.8 }] } },
+  { file: "fusion-institute.png", seed: 404, spec: { motif: "stack", ink: "#1a1208", accent: "#e0973c", panel: "#fffaf3",
+    mesh: [{ color: "#f2e6d5" }, { color: "#e3cdae", x: 0.7, y: 0.3, r: 0.9 }, { color: "#fdf7ef", x: 0.2, y: 0.85, r: 0.75 }] } },
+  { file: "docrud.png", seed: 505, spec: { motif: "orbit", ink: "#140f26", accent: "#7c5cd6", panel: "#faf8ff",
+    mesh: [{ color: "#e7e2f4" }, { color: "#cdc3e6", x: 0.65, y: 0.5, r: 0.85 }, { color: "#f6f4fc", x: 0.1, y: 0.15, r: 0.7 }] } },
+  { file: "vithub-storefront.png", seed: 606, spec: { motif: "grid", ink: "#0f1a0f", accent: "#5c9a3f", panel: "#ffffff",
+    mesh: [{ color: "#e4eddd" }, { color: "#c6dcb8", x: 0.25, y: 0.3, r: 0.85 }, { color: "#f4f8f1", x: 0.85, y: 0.8, r: 0.7 }] } },
+  { file: "warehouse-management.png", seed: 707, spec: { motif: "stack", ink: "#101418", accent: "#5b7285", panel: "#f7f9fb",
+    mesh: [{ color: "#dfe4e9" }, { color: "#c2cbd4", x: 0.3, y: 0.7, r: 0.9 }, { color: "#eef1f4", x: 0.8, y: 0.2, r: 0.75 }] } },
+  { file: "taxi-booking.png", seed: 808, spec: { motif: "orbit", ink: "#1a1408", accent: "#e0a53c", panel: "#1c1a17",
+    mesh: [{ color: "#22201c" }, { color: "#39332a", x: 0.6, y: 0.4, r: 0.9 }, { color: "#161513", x: 0.15, y: 0.85, r: 0.8 }] } },
+  { file: "maritime-5g-research.png", seed: 909, spec: { motif: "wave", ink: "#0b1a2b", accent: "#4aa3d8", panel: "#ffffff",
+    mesh: [{ color: "#0f1e2e" }, { color: "#1d3a4f", x: 0.7, y: 0.3, r: 0.9 }, { color: "#0a1420", x: 0.2, y: 0.85, r: 0.8 }] } },
 ];
 for (const p of projects) projectArt(p.file, p.seed, p.spec);
 
@@ -318,13 +183,6 @@ function avatar(file, seed, colors, size = 320) {
 }
 
 avatar("pawan.png", 900, ["#2f3a4d", "#151a24", "#c9d4e4"], 400);
-[
-  ["nadia-oyelaran.png", 911, ["#3b3050", "#1c1728", "#d7cae8"]],
-  ["ivan-brekke.png", 922, ["#25404a", "#101d24", "#c3ddd9"]],
-  ["mira-halloran.png", 933, ["#4a3a2c", "#241a13", "#e6d4bf"]],
-  ["tomas-lindqvist.png", 944, ["#2b3f2e", "#141f16", "#cbdcc6"]],
-  ["ayesha-rahman.png", 955, ["#4a2f38", "#22151a", "#e8ccd3"]],
-].forEach(([f, sd, cs]) => avatar(f, sd, cs, 200));
 
 /* ------------------------------------------------------------------ *
  * Open Graph card

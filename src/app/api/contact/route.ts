@@ -42,8 +42,8 @@ export async function POST(request: Request) {
   return NextResponse.json({
     ok: true,
     message: requireDetails
-      ? "Thanks — your message is with me. I reply within two working days."
-      : "Thanks — I have your address and will be in touch shortly.",
+      ? "Thanks — your message has been received. I will come back to you."
+      : "Thanks — I have your address and will be in touch.",
   });
 }
 

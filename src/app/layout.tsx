@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { site } from "@/data/site";
+import { site, socials } from "@/data/site";
 import { SiteShell } from "@/components/SiteShell";
 import { ThemeScript } from "@/components/ThemeScript";
 import "./globals.css";
@@ -27,7 +27,14 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.role}`,
     description: site.description,
     url: site.url,
-    images: [{ url: "/images/og.png", width: 1200, height: 630, alt: site.name }],
+    images: [
+      {
+        url: "/images/og.png",
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — ${site.role}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -36,6 +43,39 @@ export const metadata: Metadata = {
     images: ["/images/og.png"],
   },
   robots: { index: true, follow: true },
+  keywords: [
+    "Pawan Mishra",
+    "software engineer",
+    "frontend engineer",
+    "full stack developer",
+    "Pune",
+    "Next.js",
+    "React",
+  ],
+};
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  jobTitle: site.role,
+  description: site.description,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Pune",
+    addressRegion: "Maharashtra",
+    addressCountry: "IN",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Birla Institute of Technology and Science, Pilani — Goa Campus",
+  },
+  worksFor: {
+    "@type": "Organization",
+    name: "Vionsys IT Solutions",
+  },
+  sameAs: socials.map((social) => social.href),
 };
 
 export const viewport: Viewport = {
@@ -54,6 +94,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeScript />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        />
         <a
           href="#content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-100 focus:rounded-md focus:bg-content focus:px-3 focus:py-2 focus:text-label focus:text-ink focus:shadow-[var(--shadow-nav)]"

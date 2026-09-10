@@ -1,20 +1,17 @@
 /** Technology marks are drawn as original monogram glyphs, never vendor artwork. */
 export type TechKey =
   | "typescript"
+  | "javascript"
   | "react"
   | "next"
   | "tailwind"
   | "node"
-  | "postgres"
-  | "graphql"
-  | "redis"
-  | "rust"
-  | "python"
+  | "express"
+  | "mongodb"
   | "aws"
-  | "figma"
-  | "motion"
-  | "webgl"
-  | "go";
+  | "shopify"
+  | "vercel"
+  | "figma";
 
 export type TechMark = {
   label: string;
@@ -27,18 +24,15 @@ export type TechMark = {
 
 export const techMarks: Record<TechKey, TechMark> = {
   typescript: { label: "TypeScript", short: "TS", bg: "#2f6fd0", fg: "#ffffff" },
+  javascript: { label: "JavaScript", short: "JS", bg: "#c9a227", fg: "#241c05" },
   react: { label: "React", short: "Re", bg: "#149eca", fg: "#04212b" },
   next: { label: "Next.js", short: "N", bg: "#111111", fg: "#ffffff" },
   tailwind: { label: "Tailwind CSS", short: "Tw", bg: "#2eb3c4", fg: "#04262b" },
   node: { label: "Node.js", short: "No", bg: "#3f8f47", fg: "#f2fbf3" },
-  postgres: { label: "PostgreSQL", short: "Pg", bg: "#31648c", fg: "#eef5fa" },
-  graphql: { label: "GraphQL", short: "GQ", bg: "#c23591", fg: "#ffffff" },
-  redis: { label: "Redis", short: "Rd", bg: "#b3352c", fg: "#fdeceb" },
-  rust: { label: "Rust", short: "Rs", bg: "#6a4028", fg: "#f7ece3" },
-  python: { label: "Python", short: "Py", bg: "#3b6f9e", fg: "#fdf4d8" },
+  express: { label: "Express", short: "Ex", bg: "#4a4a4a", fg: "#f5f5f5" },
+  mongodb: { label: "MongoDB", short: "Mo", bg: "#3d7a45", fg: "#eefaef" },
   aws: { label: "AWS", short: "Aw", bg: "#8a5a1f", fg: "#fff3e0" },
+  shopify: { label: "Shopify", short: "Sh", bg: "#4a7c33", fg: "#f1fae8" },
+  vercel: { label: "Vercel", short: "Ve", bg: "#171717", fg: "#fafafa" },
   figma: { label: "Figma", short: "Fg", bg: "#a259ff", fg: "#ffffff" },
-  motion: { label: "Motion", short: "Mo", bg: "#e5b23c", fg: "#241c05" },
-  webgl: { label: "WebGL", short: "GL", bg: "#5b4b8a", fg: "#f1ecff" },
-  go: { label: "Go", short: "Go", bg: "#2b8fa8", fg: "#e9fbff" },
 };

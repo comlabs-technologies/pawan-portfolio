@@ -6,88 +6,107 @@ export type Project = {
   description: string;
   image: string;
   alt: string;
-  href: string;
+  /** Omitted until a verified public URL exists; the card then renders unlinked. */
+  href?: string;
   external?: boolean;
-  year: string;
+  context: string;
   stack: TechKey[];
   featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
-    slug: "atlas-analytics",
-    title: "Atlas Analytics",
+    slug: "formial-platform",
+    title: "Formial Platform",
     description:
-      "A query console for product teams that streams results while they compute. Cut median time-to-first-row from 4.1s to 380ms.",
-    image: "/images/projects/atlas-analytics.png",
-    alt: "Abstract rendering of layered analytics panels with a bar chart",
-    href: "https://example.com/atlas",
-    external: true,
-    year: "2025",
-    stack: ["typescript", "react", "postgres", "go"],
+      "A React and Node.js platform backed by MongoDB and AWS EC2/S3. The system supported more than 2,000 users and replaced a fragmented WhatsApp-based operational workflow.",
+    image: "/images/projects/formial-platform.png",
+    alt: "Abstract rendering of layered application panels for the Formial platform",
+    context: "Formial Labs",
+    stack: ["react", "javascript", "node", "mongodb", "aws"],
     featured: true,
   },
   {
-    slug: "meridian-design-system",
-    title: "Meridian Design System",
+    slug: "vionsys-platform",
+    title: "Vionsys Company Platform",
     description:
-      "Forty-two components, one token pipeline, three products. Design-to-production drift dropped to near zero after adoption.",
-    image: "/images/projects/meridian-design-system.png",
-    alt: "Abstract grid composition of interface blocks in warm neutrals",
-    href: "https://example.com/meridian",
-    external: true,
-    year: "2024",
-    stack: ["typescript", "react", "tailwind", "figma"],
+      "End-to-end ownership of the company's main digital presence, including interface design, responsive frontend implementation, deployment and maintenance.",
+    image: "/images/projects/vionsys-platform.png",
+    alt: "Abstract grid composition representing the Vionsys company platform",
+    context: "Vionsys IT Solutions",
+    stack: ["typescript", "next", "react", "tailwind"],
     featured: true,
   },
   {
-    slug: "harbor-payments",
-    title: "Harbor Checkout",
+    slug: "global-services-enterprise",
+    title: "Global Services Enterprise",
     description:
-      "A payment flow rebuilt around optimistic state and idempotent retries. Checkout completion rose 9.4% across three markets.",
-    image: "/images/projects/harbor-payments.png",
-    alt: "Abstract stack of layered cards in teal tones",
-    href: "https://example.com/harbor",
-    external: true,
-    year: "2024",
-    stack: ["typescript", "next", "node", "redis"],
+      "Worked directly with the founder on product strategy, design, Next.js and TypeScript implementation, SEO and Vercel deployment.",
+    image: "/images/projects/global-services-enterprise.png",
+    alt: "Abstract layered interface composition in teal tones",
+    context: "Founder-led engagement",
+    stack: ["typescript", "next", "tailwind", "vercel"],
     featured: true,
   },
   {
-    slug: "signal-observability",
-    title: "Signal",
+    slug: "fusion-institute",
+    title: "Fusion Institute Website",
     description:
-      "A latency explorer that renders one million spans in a canvas timeline without dropping a frame on a four-year-old laptop.",
-    image: "/images/projects/signal-observability.png",
-    alt: "Abstract flowing wave lines over a deep violet field",
-    href: "https://example.com/signal",
-    external: true,
-    year: "2023",
-    stack: ["typescript", "webgl", "rust", "graphql"],
+      "Designed and developed a complete responsive education website from initial requirements through production deployment.",
+    image: "/images/projects/fusion-institute.png",
+    alt: "Abstract stack of layered cards in warm tones",
+    context: "Founder-led engagement",
+    stack: ["next", "react", "tailwind", "vercel"],
   },
   {
-    slug: "cadence-scheduling",
-    title: "Cadence",
+    slug: "docrud",
+    title: "Docrud",
     description:
-      "Scheduling for clinics across eleven time zones. Double-booking incidents went from weekly to none in the first six months.",
-    image: "/images/projects/cadence-scheduling.png",
-    alt: "Abstract orbital composition in warm apricot tones",
-    href: "https://example.com/cadence",
-    external: true,
-    year: "2023",
-    stack: ["typescript", "react", "node", "postgres"],
+      "Implemented authentication and onboarding workflows using Next.js and Node.js for a professional networking platform.",
+    image: "/images/projects/docrud.png",
+    alt: "Abstract orbital composition representing connected profiles",
+    context: "Founder-led engagement",
+    stack: ["next", "typescript", "node", "mongodb"],
   },
   {
-    slug: "quill-editor",
-    title: "Quill",
+    slug: "vithub-storefront",
+    title: "Vithub.in",
     description:
-      "A collaborative markdown editor with CRDT sync and offline drafts. Conflict resolution runs entirely on the client.",
-    image: "/images/projects/quill-editor.png",
-    alt: "Abstract dark editor surface with green syntax accents",
-    href: "https://example.com/quill",
-    external: true,
-    year: "2022",
-    stack: ["typescript", "react", "rust", "motion"],
+      "Built and configured a complete Shopify storefront with responsive merchandising and ecommerce flows.",
+    image: "/images/projects/vithub-storefront.png",
+    alt: "Abstract grid of merchandising blocks in green tones",
+    context: "Founder-led engagement",
+    stack: ["shopify", "javascript"],
+  },
+  {
+    slug: "warehouse-management",
+    title: "Warehouse Management System",
+    description:
+      "Translated client conversations and operational requirements into product flows and implementation plans.",
+    image: "/images/projects/warehouse-management.png",
+    alt: "Abstract stacked panels representing warehouse inventory flows",
+    context: "Vionsys IT Solutions",
+    stack: ["typescript", "react", "node"],
+  },
+  {
+    slug: "taxi-booking",
+    title: "Taxi-Booking Application",
+    description:
+      "Contributed to requirements discovery, feature planning and development for a client-facing transportation platform.",
+    image: "/images/projects/taxi-booking.png",
+    alt: "Abstract orbital composition in warm amber tones",
+    context: "Vionsys IT Solutions",
+    stack: ["typescript", "react", "node"],
+  },
+  {
+    slug: "maritime-5g-research",
+    title: "Maritime 5G Research",
+    description:
+      "Conducted research at BITS Pilani into 5G network architecture for maritime connectivity, involving the Indian Navy and Mormugao Port Authority.",
+    image: "/images/projects/maritime-5g-research.png",
+    alt: "Abstract flowing network lines over a deep blue field",
+    context: "BITS Pilani, Goa Campus",
+    stack: [],
   },
 ];
 

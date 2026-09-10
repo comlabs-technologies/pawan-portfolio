@@ -1,18 +1,18 @@
+import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SectionFrame } from "@/components/SectionFrame";
 import { ProjectCard } from "@/components/ProjectCard";
-import { BlogRow } from "@/components/BlogRow";
+import { NoteRow } from "@/components/NoteRow";
 import { ExperienceItem } from "@/components/ExperienceItem";
-import { TestimonialMarquee } from "@/components/TestimonialMarquee";
+import { OutcomeCards } from "@/components/OutcomeCards";
 import { EmailEnquiry } from "@/components/EmailEnquiry";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/StaggerGroup";
 import { featuredProjects } from "@/data/projects";
-import { latestArticles } from "@/data/articles";
+import { notes, notesProfileUrl } from "@/data/notes";
 import { experience } from "@/data/experience";
 import { site } from "@/data/site";
-import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -43,23 +43,28 @@ export default function HomePage() {
         </Reveal>
       </SectionFrame>
 
-      <section aria-labelledby="writing-heading" className="mt-10">
-        <SectionHeading id="writing-heading">Latest writing</SectionHeading>
+      <section aria-labelledby="thinking-heading" className="mt-10">
+        <SectionHeading id="thinking-heading">Thinking</SectionHeading>
+        <Reveal delay={0.06} className="mt-2">
+          <p className="max-w-[62ch] text-meta text-ink-3">
+            Subjects I write about on LinkedIn.
+          </p>
+        </Reveal>
 
-        <StaggerGroup className="mt-4 space-y-1" stagger={0.08}>
-          {latestArticles.map((article) => (
-            <StaggerItem key={article.slug}>
-              <BlogRow article={article} />
+        <StaggerGroup className="mt-3 space-y-1" stagger={0.08}>
+          {notes.slice(0, 3).map((note) => (
+            <StaggerItem key={note.title}>
+              <NoteRow note={note} href={notesProfileUrl} />
             </StaggerItem>
           ))}
         </StaggerGroup>
 
         <Reveal delay={0.15} className="mt-4">
           <Link
-            href="/blog"
+            href="/thinking"
             className="text-label text-ink-2 underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink hover:decoration-current"
           >
-            All writing
+            All subjects
           </Link>
         </Reveal>
       </section>
@@ -74,13 +79,9 @@ export default function HomePage() {
         </ul>
       </SectionFrame>
 
-      <section aria-labelledby="testimonials-heading" className="mt-10">
-        <SectionHeading id="testimonials-heading">People I have worked with</SectionHeading>
-
-        {/* Bleeds to the canvas edges; the mask fade handles the entry and exit. */}
-        <Reveal delay={0.1} className="mt-5 -mx-4 md:-mx-8">
-          <TestimonialMarquee />
-        </Reveal>
+      <section aria-labelledby="outcomes-heading" className="mt-10">
+        <SectionHeading id="outcomes-heading">Selected outcomes</SectionHeading>
+        <OutcomeCards />
       </section>
 
       <section aria-labelledby="contact-heading" className="mt-12">
