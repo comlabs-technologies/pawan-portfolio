@@ -133,6 +133,16 @@
   h1, h2, h3, h4 {
     text-wrap: balance;
   }
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  /* The navbar is sticky; anchored content must not land underneath it. */
+  :target,
+  #content {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
 /* ---------------------------------------------------------------- *
@@ -147,6 +157,17 @@
     transparent 50%
   );
   background-size: 10px 10px;
+}
+
+@utility rule-x {
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--border-strong) 6%,
+    var(--border-strong) 94%,
+    transparent
+  );
 }
 
 @utility title-shadow {

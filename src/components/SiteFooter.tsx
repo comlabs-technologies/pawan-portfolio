@@ -4,7 +4,8 @@ import { SocialIcon } from "./SocialIcon";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-line pt-5 pb-8">
+    <footer className="relative mt-16 pt-5 pb-8">
+      <span aria-hidden="true" className="rule-x absolute inset-x-0 top-0" />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-meta text-ink-3">
           Built with care by{" "}
@@ -24,7 +25,7 @@ export function SiteFooter() {
                 target="_blank"
                 rel="me noreferrer"
                 aria-label={`${site.shortName} on ${social.label}`}
-                className="grid size-11 place-items-center rounded-full text-ink-3 transition-colors duration-200 hover:bg-muted hover:text-ink"
+                className="grid size-11 place-items-center rounded-full text-ink-3 transition-[color,background-color] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-muted hover:text-ink"
               >
                 <SocialIcon icon={social.icon} />
               </a>

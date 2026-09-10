@@ -4,14 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useReducedMotion,
+} from "motion/react";
 import { Menu, X } from "lucide-react";
 import { navItems, site } from "@/data/site";
 import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
-const MORPH_AT = 520;
+/** Separate thresholds so a scroll resting near the boundary cannot flicker. */
+const MORPH_ENTER = 520;
+const MORPH_EXIT = 460;
 
 export function FloatingNavbar() {
   const pathname = usePathname();
@@ -21,12 +29,8 @@ export function FloatingNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (value) => {
-    setFloating(value > MORPH_AT);
+    setFloating((current) => (current ? value > MORPH_EXIT : value > MORPH_ENTER));
   });
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -42,6 +46,17 @@ export function FloatingNavbar() {
 
   return (
     <div className="sticky top-0 z-50 pt-3">
+      {/* Content dissolves into the canvas as it passes under the bar. */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute inset-x-0 top-0 -z-10 h-20",
+          "bg-linear-to-b from-content via-content/80 to-transparent",
+          "transition-opacity duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+          floating ? "opacity-100" : "opacity-0",
+        )}
+      />
+
       <nav
         aria-label="Primary"
         data-floating={floating ? "true" : "false"}
@@ -49,7 +64,7 @@ export function FloatingNavbar() {
           /* Explicitly listed properties only — never `transition: all`. */
           transitionProperty:
             "width, border-radius, translate, box-shadow, background-color, backdrop-filter",
-          transitionDuration: "400ms",
+          transitionDuration: "420ms",
           transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         }}
         className={cn(
@@ -68,7 +83,14 @@ export function FloatingNavbar() {
           aria-label={`${site.name} — home`}
           className="group ml-1 flex size-11 items-center justify-center rounded-full"
         >
-          <span className="relative block size-8 overflow-hidden rounded-full ring-1 ring-[var(--image-ring)] transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]">
+          <span
+            className={cn(
+              "relative block size-8 overflow-hidden rounded-full ring-1 ring-[var(--image-ring)]",
+              "transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              "group-hover:scale-[1.02] group-hover:ring-[var(--border-strong)]",
+              "group-focus-visible:scale-[1.02]",
+            )}
+          >
             <Image
               src={site.avatar}
               alt=""
@@ -84,22 +106,42 @@ export function FloatingNavbar() {
           <ThemeToggle />
 
           <ul className="hidden items-center gap-0.5 sm:flex">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                  className={cn(
-                    "flex h-11 items-center rounded-full px-3 text-label transition-colors duration-200",
-                    isActive(item.href)
-                      ? "bg-muted font-medium text-ink"
-                      : "text-ink-2 hover:bg-muted hover:text-ink",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {navItems.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative flex h-11 items-center rounded-full px-3 text-label",
+                      "transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                      active
+                        ? "font-medium text-ink"
+                        : "text-ink-2 hover:bg-muted/70 hover:text-ink",
+                    )}
+                  >
+                    {/* The marker slides between routes instead of cutting. */}
+                    {active ? (
+                      reduced ? (
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-0 rounded-full bg-muted"
+                        />
+                      ) : (
+                        <motion.span
+                          aria-hidden="true"
+                          layoutId="nav-active"
+                          className="absolute inset-0 rounded-full bg-muted"
+                          transition={{ duration: 0.42, ease: EASE }}
+                        />
+                      )
+                    ) : null}
+                    <span className="relative z-10">{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <button
@@ -108,7 +150,11 @@ export function FloatingNavbar() {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="grid size-11 place-items-center rounded-full text-ink-2 transition-colors duration-200 hover:bg-muted hover:text-ink sm:hidden"
+            className={cn(
+              "grid size-11 place-items-center rounded-full text-ink-2 sm:hidden",
+              "transition-colors duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              "hover:bg-muted hover:text-ink",
+            )}
           >
             {menuOpen ? (
               <X aria-hidden="true" className="size-4" />
@@ -135,9 +181,12 @@ export function FloatingNavbar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
+                    // Closing here avoids a state update in an effect on navigation.
+                    onClick={() => setMenuOpen(false)}
                     aria-current={isActive(item.href) ? "page" : undefined}
                     className={cn(
-                      "flex min-h-11 items-center rounded-lg px-3 text-label transition-colors duration-200",
+                      "flex min-h-11 items-center rounded-lg px-3 text-label",
+                      "transition-colors duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
                       isActive(item.href)
                         ? "bg-muted font-medium text-ink"
                         : "text-ink-2 hover:bg-muted hover:text-ink",

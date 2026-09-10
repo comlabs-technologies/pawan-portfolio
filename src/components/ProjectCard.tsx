@@ -13,13 +13,14 @@ type ProjectCardProps = {
 };
 
 const shell = cn(
-  "group relative flex h-full flex-col rounded-xl p-2 -m-2",
+  "group relative flex h-full flex-col rounded-xl p-2 -m-2 ring-1 ring-transparent",
   "transition-[background-color,box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
 );
 
 const interactive = cn(
-  "hover:bg-muted/60 hover:shadow-[var(--shadow-lift)]",
-  "focus-visible:bg-muted/60 focus-visible:shadow-[var(--shadow-lift)]",
+  "hover:bg-muted/60 hover:ring-[var(--image-ring)] hover:shadow-[var(--shadow-lift)]",
+  "focus-visible:bg-muted/60 focus-visible:ring-[var(--image-ring)]",
+  "focus-visible:shadow-[var(--shadow-lift)]",
 );
 
 export function ProjectCard({ project, priority = false, className }: ProjectCardProps) {
@@ -62,7 +63,13 @@ function ProjectCardBody({
 
   return (
     <>
-      <div className="relative aspect-16/10 w-full overflow-hidden rounded-xl ring-1 ring-[var(--image-ring)]">
+      <div
+        className={cn(
+          "relative aspect-16/10 w-full overflow-hidden rounded-xl ring-1 ring-[var(--image-ring)]",
+          "transition-[box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          linked && "group-hover:ring-[var(--border-strong)]",
+        )}
+      >
         <Image
           src={project.image}
           alt={project.alt}

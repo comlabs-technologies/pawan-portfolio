@@ -5,7 +5,7 @@ light and dark themes, and a restrained blur-to-focus motion system.
 
 ## Stack
 
-- **Next.js 15** (App Router, React 19, TypeScript)
+- **Next.js 16** (App Router, React 19, TypeScript, Turbopack)
 - **Tailwind CSS v4** — tokens live in `src/app/globals.css`
 - **Motion for React** — entrances and the navbar morph
 - **lucide-react** — interface icons
@@ -23,6 +23,8 @@ light and dark themes, and a restrained blur-to-focus motion system.
 `/blog` and `/blog/:slug` redirect to `/thinking`.
 
 ## Getting started
+
+Node 20.9 or newer is required by Next 16.
 
 ```bash
 npm install

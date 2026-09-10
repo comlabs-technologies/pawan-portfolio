@@ -91,7 +91,8 @@ export function EmailEnquiry() {
             "absolute inset-y-1.5 right-1.5 inline-flex min-w-32 items-center justify-center gap-2 rounded-md px-3",
             "bg-muted text-label font-medium text-ink",
             "shadow-[inset_0_1px_0_var(--inset-hi),inset_0_-1px_0_var(--shade-soft),0_1px_1px_var(--shade-soft)]",
-            "transition-[background-color,opacity] duration-200 hover:opacity-90",
+            "transition-[background-color,box-shadow,transform] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            "hover:bg-line-strong active:scale-[0.99]",
             "disabled:cursor-not-allowed disabled:opacity-60",
           )}
         >

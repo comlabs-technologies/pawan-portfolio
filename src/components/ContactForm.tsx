@@ -128,7 +128,9 @@ export function ContactForm() {
             "inline-flex h-11 min-w-32 items-center justify-center gap-2 rounded-lg px-4",
             "bg-ink text-label font-medium text-content",
             "shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_1px_2px_var(--shade-soft)]",
-            "transition-[opacity,transform] duration-200 hover:opacity-90 active:scale-[0.99]",
+            "transition-[opacity,transform,box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            "hover:opacity-90 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_2px_6px_-2px_var(--shade)]",
+            "active:scale-[0.99]",
             "disabled:cursor-not-allowed disabled:opacity-60",
           )}
         >
