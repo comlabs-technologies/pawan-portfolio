@@ -77,10 +77,9 @@ export default function HomePage() {
       <section aria-labelledby="testimonials-heading" className="mt-10">
         <SectionHeading id="testimonials-heading">People I have worked with</SectionHeading>
 
+        {/* Bleeds to the canvas edges; the mask fade handles the entry and exit. */}
         <Reveal delay={0.1} className="mt-5 -mx-4 md:-mx-8">
-          <div className="px-4 md:px-8">
-            <TestimonialMarquee />
-          </div>
+          <TestimonialMarquee />
         </Reveal>
       </section>
 
