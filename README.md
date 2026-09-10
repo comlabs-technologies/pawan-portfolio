@@ -15,7 +15,7 @@ light and dark themes, and a restrained blur-to-focus motion system.
 | Route | Contents |
 | --- | --- |
 | `/` | Hero, selected projects, thinking, experience, selected outcomes, enquiry form |
-| `/about` | Positioning, how I work, education and leadership |
+| `/about` | Positioning, how I work, places, education and leadership |
 | `/projects` | All nine projects |
 | `/thinking` | Subjects written about on LinkedIn |
 | `/contact` | Full contact form and details |
@@ -42,6 +42,7 @@ Everything editable is typed data under `src/data/`:
 - `outcomes.ts` — the factual "Selected outcomes" cards
 - `principles.ts` — the "How I work" list on the about page
 - `credentials.ts` — education, leadership and service
+- `travel.ts` — the draggable photo pile, including each card's resting position
 - `notes.ts` — subjects for the thinking page
 - `tech.ts` — technology monograms
 
@@ -69,9 +70,10 @@ screenshots, with no licensed or third-party assets. Regenerate with:
 node scripts/generate-assets.mjs
 ```
 
-Replace the files with real product screenshots and a photograph when they are
-available; the components read paths from the data files, and `next/image`
-handles the rest.
+Replace the files with real product screenshots, real travel photographs and a
+portrait when they are available; the components read paths from the data
+files, and `next/image` handles the rest. Alt text describes the current images
+as illustrations, so update it alongside any photograph you drop in.
 
 ## Design system
 
@@ -94,5 +96,8 @@ or a database write before relying on it; the client contract does not change.
 
 ## Accessibility and motion
 
-`prefers-reduced-motion` removes transforms, blur and the rotating role badge.
-All content stays visible, and theme switching and navigation keep working.
+`prefers-reduced-motion` removes transforms, blur, drag inertia and the
+rotating role badge; the photo pile becomes an ordinary scrolling row. All
+content stays visible, and theme switching and navigation keep working. Each
+photo card is focusable and moves with the arrow keys, so the pile is usable
+without a pointer.

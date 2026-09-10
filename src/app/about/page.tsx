@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SectionFrame } from "@/components/SectionFrame";
 import { PrincipleList } from "@/components/PrincipleList";
+import { TravelGallery } from "@/components/TravelGallery";
 import { Timeline } from "@/components/Timeline";
 import { Reveal } from "@/components/Reveal";
 import { credentials } from "@/data/credentials";
@@ -43,6 +44,17 @@ export default function AboutPage() {
       <section aria-labelledby="principles-heading" className="mt-12">
         <SectionHeading id="principles-heading">How I work</SectionHeading>
         <PrincipleList />
+      </section>
+
+      <section aria-labelledby="places-heading" className="mt-12">
+        <SectionHeading id="places-heading">Places I have wandered</SectionHeading>
+        <p className="mt-2 text-meta text-ink-3">
+          Drag a photograph to move it, or focus one and use the arrow keys.
+          Everything stays where you leave it.
+        </p>
+        <div className="mt-4">
+          <TravelGallery />
+        </div>
       </section>
 
       <SectionFrame aria-labelledby="credentials-heading">

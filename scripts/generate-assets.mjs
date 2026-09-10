@@ -7,7 +7,127 @@ import {
 
 const OUT = path.join(process.cwd(), "public", "images");
 fs.mkdirSync(path.join(OUT, "projects"), { recursive: true });
+fs.mkdirSync(path.join(OUT, "travel"), { recursive: true });
 fs.mkdirSync(path.join(OUT, "people"), { recursive: true });
+
+/* ------------------------------------------------------------------ *
+ * Travel scenes — procedural landscapes, one palette per destination.
+ * ------------------------------------------------------------------ */
+function travelScene(file, seed, palette) {
+  const W = 600;
+  const H = 750;
+  const s = new Surface(W, H);
+  const noise = makeNoise(seed);
+  const rnd = mulberry(seed * 7 + 13);
+
+  const skyTop = hex(palette.skyTop);
+  const skyBottom = hex(palette.skyBottom);
+  const horizon = H * palette.horizon;
+
+  // Sky
+  for (let y = 0; y < H; y++) {
+    const t = smoothstep(clamp(y / horizon, 0, 1));
+    const c = mixRgb(skyTop, skyBottom, t);
+    for (let x = 0; x < W; x++) s.set(x, y, c[0], c[1], c[2]);
+  }
+
+  // Sun / light source with atmospheric glow
+  const sunX = W * palette.sunX;
+  const sunY = horizon * palette.sunY;
+  const sunColor = hex(palette.sun);
+  for (let y = 0; y < Math.ceil(horizon) + 40; y++) {
+    for (let x = 0; x < W; x++) {
+      const d = Math.hypot(x - sunX, (y - sunY) * 1.15) / (W * 0.75);
+      const glow = Math.pow(clamp(1 - d, 0, 1), 3.2) * 0.85;
+      if (glow > 0.002) s.blend(x, y, sunColor[0], sunColor[1], sunColor[2], glow);
+    }
+  }
+  circle(s, sunX, sunY, W * 0.055, sunColor, 0.9, 2.4);
+
+  // Cloud bands
+  for (let y = 0; y < horizon; y++) {
+    for (let x = 0; x < W; x++) {
+      const n = fbm(noise, x / 150 + seed, y / 46, 4);
+      const band = Math.pow(clamp((n - 0.5) * 2.6, 0, 1), 1.6);
+      const fade = smoothstep(clamp(1 - y / horizon, 0, 1)) * 0.55 + 0.15;
+      const c = hex(palette.cloud);
+      if (band > 0.01) s.blend(x, y, c[0], c[1], c[2], band * fade * 0.5);
+    }
+  }
+
+  // Layered terrain
+  palette.layers.forEach((layer, index) => {
+    const base = horizon + H * layer.offset;
+    const color = hex(layer.color);
+    const amp = H * layer.amp;
+    const phase = rnd() * 100;
+    for (let x = 0; x < W; x++) {
+      const t = x / W;
+      const ridge =
+        Math.sin(t * Math.PI * layer.freq + phase) * amp +
+        Math.sin(t * Math.PI * layer.freq * 2.7 + phase * 1.7) * amp * 0.42 +
+        (fbm(noise, x / 110 + index * 30, index * 12, 3) - 0.5) * amp * 1.5;
+      const top = base - ridge;
+      for (let y = Math.max(0, Math.floor(top)); y < H; y++) {
+        const cov = y === Math.floor(top) ? clamp(1 - (top - Math.floor(top)), 0, 1) : 1;
+        const depth = clamp((y - top) / (H * 0.5), 0, 1);
+        const shade = mixRgb(color, hex(layer.shade ?? layer.color), depth);
+        s.blend(x, y, shade[0], shade[1], shade[2], cov * (layer.alpha ?? 1));
+      }
+    }
+  });
+
+  // Water reflection / foreground haze
+  if (palette.water) {
+    const wTop = H * palette.water.top;
+    const wc = hex(palette.water.color);
+    for (let y = Math.floor(wTop); y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const ripple = fbm(noise, x / 90, y / 8 + seed, 3);
+        const a = clamp((y - wTop) / (H - wTop), 0, 1) * 0.55 + ripple * 0.14;
+        s.blend(x, y, wc[0], wc[1], wc[2], clamp(a, 0, 0.9) * 0.85);
+      }
+    }
+  }
+
+  // Air haze near the horizon
+  const haze = hex(palette.skyBottom);
+  for (let y = 0; y < H; y++) {
+    const a = Math.pow(clamp(1 - Math.abs(y - horizon) / (H * 0.22), 0, 1), 2) * 0.3;
+    if (a <= 0) continue;
+    for (let x = 0; x < W; x++) s.blend(x, y, haze[0], haze[1], haze[2], a);
+  }
+
+  vignette(s, 0.22);
+  grain(s, seed + 991, 4);
+  s.saveIndexed(path.join(OUT, "travel", file), 128);
+}
+
+const travelPalettes = [
+  // Pune — dry Deccan hillsides, warm haze.
+  { file: "pune.png", seed: 21, p: { skyTop: "#3a3358", skyBottom: "#e8b184", horizon: 0.52, sun: "#ffd9a8", sunX: 0.68, sunY: 0.8, cloud: "#f0c4ae",
+    layers: [
+      { offset: -0.02, amp: 0.05, freq: 2.3, color: "#8a6b53", shade: "#57412f", alpha: 0.95 },
+      { offset: 0.05, amp: 0.035, freq: 3.8, color: "#5d4636", shade: "#33251c" },
+      { offset: 0.15, amp: 0.028, freq: 6.0, color: "#33251f", shade: "#1a1211" },
+    ] } },
+  // Goa — green coastal ridges above the water.
+  { file: "goa-campus.png", seed: 34, p: { skyTop: "#1d4a72", skyBottom: "#cfe3e0", horizon: 0.48, sun: "#f6f0d8", sunX: 0.32, sunY: 0.66, cloud: "#e4eeea",
+    layers: [
+      { offset: -0.02, amp: 0.06, freq: 1.9, color: "#5f8560", shade: "#31492f" },
+      { offset: 0.05, amp: 0.04, freq: 3.2, color: "#3b5a3e", shade: "#1e3021" },
+      { offset: 0.16, amp: 0.024, freq: 5.8, color: "#22331f", shade: "#111c11" },
+    ], water: { top: 0.7, color: "#25566b" } } },
+  // Mormugao — harbour headland at dusk.
+  { file: "mormugao.png", seed: 47, p: { skyTop: "#152a45", skyBottom: "#e2ab7f", horizon: 0.5, sun: "#ffd6a0", sunX: 0.55, sunY: 0.85, cloud: "#e8bda6",
+    layers: [
+      { offset: 0.0, amp: 0.045, freq: 2.0, color: "#4a5a6b", shade: "#26313d" },
+      { offset: 0.08, amp: 0.03, freq: 4.0, color: "#2e3b48", shade: "#161e26" },
+      { offset: 0.19, amp: 0.02, freq: 7.0, color: "#1a222b", shade: "#0d1216" },
+    ], water: { top: 0.72, color: "#1f3a4d" } } },
+];
+
+for (const t of travelPalettes) travelScene(t.file, t.seed, t.p);
 
 /* ------------------------------------------------------------------ *
  * Project artwork — abstract, structural compositions.
