@@ -29,10 +29,10 @@ export function TechIconStack({
             key={key}
             style={{ "--i": index } as React.CSSProperties}
             className={cn(
-              "grid place-items-center rounded-full bg-content ring-2 ring-line",
+              "grid place-items-center rounded-full border border-line bg-content",
               "transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              size === "sm" ? "size-5" : "size-7",
-              index > 0 && (size === "sm" ? "-ml-1.5" : "-ml-2"),
+              size === "sm" ? "size-5" : "size-8",
+              index > 0 && (size === "sm" ? "-ml-1.5" : "-ml-2.5"),
               spread && "translate-x-[calc(var(--i)*1.5px)]",
               spreadOnGroupHover &&
                 "group-hover:translate-x-[calc(var(--i)*1.5px)] group-focus-visible:translate-x-[calc(var(--i)*1.5px)]",

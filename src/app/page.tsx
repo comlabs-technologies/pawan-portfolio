@@ -21,16 +21,15 @@ export default function HomePage() {
     <>
       <Hero />
 
-      <section aria-labelledby="projects-heading" className="mt-10">
-        <h2
-          id="projects-heading"
-          className="text-title-sm font-bold tracking-[-0.04em] text-ink md:text-[2rem] md:leading-[2.25rem]"
-        >
+      <span aria-hidden="true" className="rule-x mt-12 block" />
+
+      <section aria-labelledby="projects-heading" className="mt-12">
+        <SectionHeading id="projects-heading" className="font-semibold">
           Selected work
-        </h2>
+        </SectionHeading>
 
         <StaggerGroup
-          className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-8 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
           stagger={0.09}
         >
           {featuredProjects.map((project, index) => (
