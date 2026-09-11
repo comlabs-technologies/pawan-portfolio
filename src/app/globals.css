@@ -174,10 +174,45 @@
   text-shadow: 0 1px 0 var(--shade-soft);
 }
 
+@utility name-sketch {
+  text-shadow:
+    0.45px 0.3px 0 color-mix(in srgb, currentColor 26%, transparent),
+    -0.4px 0.55px 0 color-mix(in srgb, currentColor 12%, transparent),
+    1.1px 0.85px 0 color-mix(in srgb, currentColor 10%, transparent),
+    -0.7px 1.15px 0 color-mix(in srgb, currentColor 7%, transparent),
+    1.85px 1.55px 0 color-mix(in srgb, currentColor 6%, transparent),
+    0 0 16px color-mix(in srgb, currentColor 8%, transparent);
+}
+
 @utility section-inset {
   box-shadow:
     inset 0 10px 14px -14px var(--shade),
     inset 0 -10px 14px -14px var(--shade);
+}
+
+@utility edge-fade {
+  --edge-fade: linear-gradient(
+    to right,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--edge-fade);
+  mask-image: var(--edge-fade);
+}
+
+@utility marquee-track {
+  animation: testimonial-scroll 68s linear infinite;
+}
+
+@keyframes testimonial-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
 @keyframes dot-pulse {
@@ -201,6 +236,7 @@
     scroll-behavior: auto;
   }
 
+  .marquee-track,
   .decor-dot {
     animation: none !important;
   }

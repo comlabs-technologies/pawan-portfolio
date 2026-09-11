@@ -6,7 +6,9 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { NoteRow } from "@/components/NoteRow";
 import { ExperienceItem } from "@/components/ExperienceItem";
 import { OutcomeCards } from "@/components/OutcomeCards";
+import { TestimonialMarquee } from "@/components/TestimonialMarquee";
 import { EmailEnquiry } from "@/components/EmailEnquiry";
+import { TechMarquee } from "@/components/TechMarquee";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/StaggerGroup";
 import { featuredProjects } from "@/data/projects";
@@ -79,9 +81,25 @@ export default function HomePage() {
         </ul>
       </SectionFrame>
 
+      <section aria-labelledby="testimonials-heading" className="mt-10">
+        <SectionHeading id="testimonials-heading">People I have worked with</SectionHeading>
+
+        {/* Bleeds to the canvas edges; the mask fade handles the entry and exit. */}
+        <Reveal delay={0.1} className="mt-5 -mx-4 md:-mx-8">
+          <TestimonialMarquee />
+        </Reveal>
+      </section>
+
       <section aria-labelledby="outcomes-heading" className="mt-10">
         <SectionHeading id="outcomes-heading">Selected outcomes</SectionHeading>
         <OutcomeCards />
+      </section>
+
+      <section aria-labelledby="tech-heading" className="mt-12">
+        <SectionHeading id="tech-heading">Tech Stack and Tools</SectionHeading>
+        <div className="mt-5 -mx-4 md:-mx-8">
+          <TechMarquee />
+        </div>
       </section>
 
       <section aria-labelledby="contact-heading" className="mt-12">
