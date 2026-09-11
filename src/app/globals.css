@@ -178,9 +178,11 @@
   font-weight: 700;
   letter-spacing: -0.05em;
   color: var(--text-primary);
-  filter:
-    drop-shadow(0 1px 1px rgb(0 0 0 / 0.04))
-    drop-shadow(0 2px 6px rgb(0 0 0 / 0.08));
+  /* text-shadow, not filter — motion entrances animate filter and would erase drop-shadow */
+  text-shadow:
+    0 1px 1px color-mix(in srgb, var(--text-primary) 12%, transparent),
+    0 2px 6px color-mix(in srgb, var(--text-primary) 10%, transparent),
+    0 4px 14px color-mix(in srgb, var(--text-primary) 6%, transparent);
 }
 
 @utility highlight-span {
