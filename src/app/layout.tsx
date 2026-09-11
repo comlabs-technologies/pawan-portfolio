@@ -45,8 +45,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   keywords: [
     "Pawan Mishra",
-    "software engineer",
     "frontend engineer",
+    "product builder",
     "full stack developer",
     "Pune",
     "Next.js",

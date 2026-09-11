@@ -6,7 +6,7 @@ import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 
 const description =
-  "Product work with founders and client teams: platforms, company websites, storefronts, operational systems and research.";
+  "Selected work: a home-services product, a technology-company presence, and a marketing-site rebuild in Next.js.";
 
 export const metadata: Metadata = {
   title: "Projects",
