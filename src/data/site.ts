@@ -33,7 +33,7 @@ export const site = {
   location: "Pune, Maharashtra, India",
   url: "https://pawan-ivory.vercel.app",
   intro:
-    "I build the interfaces and technical workflows that move businesses forward — from polished product experiences to cloud-backed operational systems.",
+    "I build the interfaces and technical workflows that move businesses forward, from polished product experiences to cloud-backed operational systems.",
   aboutIntro:
     "I am a product-minded software engineer who works directly with founders and business teams. I turn loosely defined operational problems into usable interfaces, workflows and production systems.",
   availability:

@@ -13,12 +13,12 @@ export const credentials: CredentialGroup[] = [
       {
         title: "B.E. Electrical and Electronics Engineering",
         detail:
-          "Birla Institute of Technology and Science, Pilani — Goa Campus. 2020 to 2025.",
+          "Birla Institute of Technology and Science, Pilani, Goa Campus. 2020 to 2025.",
       },
       {
         title: "M.Sc. Chemistry",
         detail:
-          "Birla Institute of Technology and Science, Pilani — Goa Campus. 2020 to 2025, taken alongside the engineering degree.",
+          "Birla Institute of Technology and Science, Pilani, Goa Campus. 2020 to 2025, taken alongside the engineering degree.",
       },
     ],
   },

@@ -18,10 +18,10 @@ export function Hero() {
         };
 
   return (
-    <header className="pt-2">
+    <header className="pt-1">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <motion.h1
-          className="name-sketch text-title-sm font-bold tracking-[-0.04em] text-ink md:text-title"
+          className="heading-display text-[2rem] leading-[2.25rem] md:text-[2.5rem] md:leading-[2.75rem]"
           {...enter(0)}
         >
           {site.name}
@@ -31,7 +31,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <motion.p className="mt-3 max-w-[52ch] text-body text-ink-2" {...enter(0.2)}>
+      <motion.p className="mt-4 max-w-[54ch] text-body leading-6 text-ink-2" {...enter(0.2)}>
         {site.intro}
       </motion.p>
     </header>

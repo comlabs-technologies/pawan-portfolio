@@ -3,14 +3,16 @@ export const techIcons = {
   react: "https://cdn.simpleicons.org/react/61DAFB",
   typescript: "https://cdn.simpleicons.org/typescript/3178C6",
   mongodb: "https://cdn.simpleicons.org/mongodb/47A248",
-  aws: "https://cdn.simpleicons.org/amazonwebservices/FF9900",
+  aws:
+    "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
   docker: "https://cdn.simpleicons.org/docker/2496ED",
   kubernetes: "https://cdn.simpleicons.org/kubernetes/326CE5",
   javascript: "https://cdn.simpleicons.org/javascript/F7DF1E",
   nodejs: "https://cdn.simpleicons.org/nodedotjs/5FA04E",
   sql: "https://cdn.simpleicons.org/postgresql/4169E1",
   claude: "https://cdn.simpleicons.org/claude/D97757",
-  chatgpt: "https://cdn.simpleicons.org/openai/412991",
+  chatgpt:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/ChatGPT-Logo.svg/1280px-ChatGPT-Logo.svg.png",
   cursor: "https://cdn.simpleicons.org/cursor/000000",
 } as const;
 
@@ -53,7 +55,7 @@ export const techMarks: Record<TechKey, TechMark> = {
   node: { label: "Node.js", icon: techIcons.nodejs },
   express: { label: "Express", icon: extraIcons.express, invertInDark: true },
   mongodb: { label: "MongoDB", icon: techIcons.mongodb },
-  aws: { label: "AWS", icon: techIcons.aws },
+  aws: { label: "AWS", icon: techIcons.aws, invertInDark: true },
   shopify: { label: "Shopify", icon: extraIcons.shopify },
   vercel: { label: "Vercel", icon: extraIcons.vercel, invertInDark: true },
   figma: { label: "Figma", icon: extraIcons.figma },
@@ -71,7 +73,7 @@ export const techIconItems: {
   { key: "javascript", label: "JavaScript", src: techIcons.javascript },
   { key: "nodejs", label: "Node.js", src: techIcons.nodejs },
   { key: "mongodb", label: "MongoDB", src: techIcons.mongodb },
-  { key: "aws", label: "AWS", src: techIcons.aws },
+  { key: "aws", label: "AWS", src: techIcons.aws, invertInDark: true },
   { key: "docker", label: "Docker", src: techIcons.docker },
   { key: "kubernetes", label: "Kubernetes", src: techIcons.kubernetes },
   { key: "sql", label: "PostgreSQL", src: techIcons.sql },

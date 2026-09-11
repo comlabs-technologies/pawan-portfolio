@@ -23,7 +23,7 @@ export function validateEnquiry(input: EnquiryInput, requireDetails: boolean): F
 
     if (!message) errors.message = "Add a short message so I know what this is about.";
     else if (message.length < 20)
-      errors.message = "A little more detail helps — at least 20 characters.";
+      errors.message = "A little more detail helps. At least 20 characters.";
   }
 
   return errors;

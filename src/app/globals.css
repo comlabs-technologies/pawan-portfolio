@@ -174,14 +174,23 @@
   text-shadow: 0 1px 0 var(--shade-soft);
 }
 
-@utility name-sketch {
+@utility heading-display {
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  /* text-shadow, not filter — motion entrances animate filter and would erase drop-shadow */
   text-shadow:
-    0.45px 0.3px 0 color-mix(in srgb, currentColor 26%, transparent),
-    -0.4px 0.55px 0 color-mix(in srgb, currentColor 12%, transparent),
-    1.1px 0.85px 0 color-mix(in srgb, currentColor 10%, transparent),
-    -0.7px 1.15px 0 color-mix(in srgb, currentColor 7%, transparent),
-    1.85px 1.55px 0 color-mix(in srgb, currentColor 6%, transparent),
-    0 0 16px color-mix(in srgb, currentColor 8%, transparent);
+    0 1px 1px color-mix(in srgb, var(--text-primary) 12%, transparent),
+    0 2px 6px color-mix(in srgb, var(--text-primary) 10%, transparent),
+    0 4px 14px color-mix(in srgb, var(--text-primary) 6%, transparent);
+}
+
+@utility highlight-span {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  border-radius: 4px;
+  background-color: var(--highlight);
+  padding: 0.125rem 0.375rem;
 }
 
 @utility section-inset {

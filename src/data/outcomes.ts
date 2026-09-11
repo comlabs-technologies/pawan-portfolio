@@ -3,7 +3,7 @@ export type Outcome = {
   detail: string;
 };
 
-/** Factual delivery outcomes — no client quotations, no invented metrics. */
+/** Factual delivery outcomes. No client quotations, no invented metrics. */
 export const outcomes: Outcome[] = [
   {
     headline: "2,000+ users supported",

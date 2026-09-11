@@ -23,7 +23,7 @@ export const projects: Project[] = [
     image: "/images/projects/cleanly.png",
     alt: "Cleanly homepage with a live product demo of the customer dashboard",
     context: "Product Design & Development",
-    stack: [],
+    stack: ["next", "react", "typescript"],
     featured: true,
   },
   {
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     href: "https://www.comlabstechnologies.com/",
     external: true,
     context: "Technology Company · Founder",
-    stack: [],
+    stack: ["next", "react", "aws"],
     featured: true,
   },
   {
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     href: "https://humanmadelogic.vercel.app/",
     external: true,
     context: "Website Redesign · Next.js",
-    stack: ["next"],
+    stack: ["next", "react", "tailwind"],
     featured: true,
   },
 ];

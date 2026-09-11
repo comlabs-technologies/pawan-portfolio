@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/thinking" },
   openGraph: {
     type: "website",
-    title: `Thinking — ${site.name}`,
+    title: `Thinking | ${site.name}`,
     description,
     url: `${site.url}/thinking`,
     images: [
-      { url: "/images/og.png", width: 1200, height: 630, alt: `${site.name} — writing` },
+      { url: "/images/og.png", width: 1200, height: 630, alt: `${site.name} writing` },
     ],
   },
 };

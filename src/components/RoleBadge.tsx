@@ -29,7 +29,7 @@ export function RoleBadge() {
 
   if (reduced) {
     return (
-      <span className="inline-flex h-7 items-center rounded-md border border-line bg-content px-2.5 text-meta font-medium text-ink-2 shadow-[var(--shadow-badge)]">
+      <span className="inline-flex h-8 items-center rounded-full border border-line bg-content px-3 text-meta font-medium text-ink-2">
         {site.roles[0]}
       </span>
     );
@@ -39,7 +39,7 @@ export function RoleBadge() {
     <motion.span
       layout
       transition={{ duration: 0.45, ease: EASE }}
-      className="inline-flex h-7 items-center overflow-hidden rounded-md border border-line bg-content px-2.5 text-meta font-medium text-ink-2 shadow-[var(--shadow-badge)]"
+      className="inline-flex h-8 items-center overflow-hidden rounded-full border border-line bg-content px-3 text-meta font-medium text-ink-2"
     >
       {/* A stable label for assistive technology: the visual cycle is decorative. */}
       <span className="sr-only">{site.role}</span>

@@ -10,7 +10,7 @@ export type TravelCard = {
 };
 
 /**
- * Places tied to Pawan's own history — where he lives, where he studied, and
+ * Places tied to Pawan's own history: where he lives, where he studied, and
  * where the maritime 5G fieldwork took him. The images are original generated
  * illustrations standing in for photographs, not licensed stock and not
  * presented as photographs.
