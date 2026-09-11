@@ -65,7 +65,7 @@ function FeaturedPreview({
   project: Project;
   priority: boolean;
 }) {
-  const preview = project.preview ?? { top: "10%", left: "5%", width: "108%" };
+  const preview = project.preview ?? { top: "6%", left: "6%", width: "108%" };
 
   return (
     <div className="relative aspect-[10/11] w-full overflow-hidden rounded-[1.25rem] bg-[#0a0a0a]">

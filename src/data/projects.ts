@@ -35,8 +35,8 @@ export const projects: Project[] = [
     stack: ["next", "react", "typescript"],
     featured: true,
     preview: {
-      top: "10%",
-      left: "5%",
+      top: "6%",
+      left: "6%",
       width: "108%",
     },
   },
