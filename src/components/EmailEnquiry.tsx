@@ -41,11 +41,11 @@ export function EmailEnquiry() {
       }
 
       setStatus("success");
-      setNotice(data.message ?? "Thanks — I will be in touch shortly.");
+      setNotice(data.message ?? "Thanks, I will be in touch shortly.");
       setEmail("");
     } catch {
       setStatus("error");
-      setNotice("The network dropped that one. Your address is still here — try again.");
+      setNotice("The network dropped that one. Your address is still here, try again.");
     }
   }
 

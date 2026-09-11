@@ -62,11 +62,11 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      setNotice(data.message ?? "Thanks — your message is with me.");
+      setNotice(data.message ?? "Thanks, your message is with me.");
       setValues({ name: "", email: "", message: "" });
     } catch {
       setStatus("error");
-      setNotice("The network dropped that one. Your message is still here — try again.");
+      setNotice("The network dropped that one. Your message is still here, try again.");
     }
   }
 

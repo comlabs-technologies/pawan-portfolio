@@ -10,11 +10,20 @@ type ProjectCardProps = {
   /** Above-the-fold cards skip lazy loading. */
   priority?: boolean;
   className?: string;
+  /** Homepage selected work uses the elevated card treatment by default. */
+  variant?: "default" | "featured";
 };
 
 const shell = cn(
-  "group relative flex h-full flex-col rounded-xl p-2 -m-2 ring-1 ring-transparent",
+  "group relative flex h-full flex-col rounded-xl p-2 -m-2 ring-1",
   "transition-[background-color,box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
+);
+
+const defaultShell = cn(shell, "ring-transparent");
+
+const featuredShell = cn(
+  shell,
+  "bg-muted/60 ring-[var(--image-ring)] shadow-[var(--shadow-lift)]",
 );
 
 const interactive = cn(
@@ -23,30 +32,30 @@ const interactive = cn(
   "focus-visible:shadow-[var(--shadow-lift)]",
 );
 
-export function ProjectCard({ project, priority = false, className }: ProjectCardProps) {
-  const body = <ProjectCardBody project={project} priority={priority} />;
+export function ProjectCard({
+  project,
+  priority = false,
+  className,
+  variant = "default",
+}: ProjectCardProps) {
+  const featured = variant === "featured";
+  const body = <ProjectCardBody project={project} priority={priority} featured={featured} />;
+  const classes = cn(featured ? featuredShell : defaultShell, !featured && interactive, className);
 
-  // Cards without a verified public URL render as plain content rather than
-  // linking somewhere invented.
   if (!project.href) {
-    return <article className={cn(shell, className)}>{body}</article>;
+    return <article className={classes}>{body}</article>;
   }
 
   if (project.external) {
     return (
-      <a
-        href={project.href}
-        target="_blank"
-        rel="noreferrer"
-        className={cn(shell, interactive, className)}
-      >
+      <a href={project.href} target="_blank" rel="noreferrer" className={classes}>
         {body}
       </a>
     );
   }
 
   return (
-    <Link href={project.href} className={cn(shell, interactive, className)}>
+    <Link href={project.href} className={classes}>
       {body}
     </Link>
   );
@@ -55,9 +64,11 @@ export function ProjectCard({ project, priority = false, className }: ProjectCar
 function ProjectCardBody({
   project,
   priority,
+  featured,
 }: {
   project: Project;
   priority: boolean;
+  featured: boolean;
 }) {
   const linked = Boolean(project.href);
 
@@ -65,9 +76,10 @@ function ProjectCardBody({
     <>
       <div
         className={cn(
-          "relative w-full overflow-hidden rounded-xl bg-muted ring-1 ring-[var(--image-ring)]",
+          "relative w-full overflow-hidden bg-black",
+          featured ? "rounded-2xl ring-1 ring-[var(--border-strong)]" : "rounded-xl bg-muted ring-1 ring-[var(--image-ring)]",
+          !featured && linked && "group-hover:ring-[var(--border-strong)]",
           "transition-[box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-          linked && "group-hover:ring-[var(--border-strong)]",
         )}
       >
         <Image
@@ -82,13 +94,13 @@ function ProjectCardBody({
         />
       </div>
 
-      <div className="mt-3 flex items-start justify-between gap-2">
+      <div className={cn("flex items-start justify-between gap-2", featured ? "mt-4" : "mt-3")}>
         <h3
           className={cn(
-            "text-label font-semibold text-ink-2 transition-colors duration-200",
-            linked
-              ? "group-hover:text-ink group-focus-visible:text-ink"
-              : "text-ink",
+            "text-label font-semibold transition-colors duration-200",
+            featured || linked
+              ? "text-ink"
+              : "text-ink-2 group-hover:text-ink group-focus-visible:text-ink",
           )}
         >
           {project.title}
@@ -96,21 +108,33 @@ function ProjectCardBody({
         {linked ? (
           <ArrowUpRight
             aria-hidden="true"
-            className="mt-px size-3.5 shrink-0 text-ink-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+            className={cn(
+              "mt-px size-3.5 shrink-0 text-ink-3 transition-opacity duration-200",
+              featured ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100",
+            )}
           />
         ) : null}
       </div>
 
-      <p className="mt-1 flex-1 text-label text-ink-2">{project.description}</p>
+      <p className={cn("flex-1 text-label leading-relaxed text-ink-2", featured ? "mt-2" : "mt-1")}>
+        {project.description}
+      </p>
 
-      <div className="mt-3 flex items-center justify-between gap-3">
-        {project.stack.length > 0 ? (
-          <TechIconStack items={project.stack} spreadOnGroupHover={linked} />
-        ) : (
-          <span />
-        )}
-        <span className="text-meta text-ink-3">{project.context}</span>
-      </div>
+      {project.stack.length > 0 ? (
+        <div className={cn(featured ? "mt-4" : "mt-3 flex items-center justify-between gap-3")}>
+          <TechIconStack
+            items={project.stack}
+            spreadOnGroupHover={!featured && linked}
+            spread={featured}
+            size={featured ? "md" : "sm"}
+          />
+          {!featured ? <span className="text-meta text-ink-3">{project.context}</span> : null}
+        </div>
+      ) : featured ? null : (
+        <div className="mt-3 flex justify-end">
+          <span className="text-meta text-ink-3">{project.context}</span>
+        </div>
+      )}
     </>
   );
 }

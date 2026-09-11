@@ -17,19 +17,17 @@ import { EASE } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 
-/** Separate thresholds so a scroll resting near the boundary cannot flicker. */
-const MORPH_ENTER = 520;
-const MORPH_EXIT = 460;
-
 export function FloatingNavbar() {
   const pathname = usePathname();
   const reduced = useReducedMotion();
   const { scrollY } = useScroll();
-  const [floating, setFloating] = useState(false);
+  const [floating, setFloating] = useState(
+    () => (typeof window !== "undefined" ? window.scrollY > 0 : false),
+  );
   const [menuOpen, setMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (value) => {
-    setFloating((current) => (current ? value > MORPH_EXIT : value > MORPH_ENTER));
+    setFloating(value > 0);
   });
 
   useEffect(() => {
@@ -61,7 +59,7 @@ export function FloatingNavbar() {
         aria-label="Primary"
         data-floating={floating ? "true" : "false"}
         style={{
-          /* Explicitly listed properties only — never `transition: all`. */
+          /* Explicitly listed properties only, never `transition: all`. */
           transitionProperty:
             "width, border-radius, translate, box-shadow, background-color, backdrop-filter",
           transitionDuration: "200ms",
@@ -80,7 +78,7 @@ export function FloatingNavbar() {
       >
         <Link
           href="/"
-          aria-label={`${site.name} — home`}
+          aria-label={`${site.name} home`}
           className="group ml-1 flex size-11 items-center justify-center rounded-full"
         >
           <span

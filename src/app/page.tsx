@@ -21,21 +21,26 @@ export default function HomePage() {
     <>
       <Hero />
 
-      <SectionFrame aria-labelledby="projects-heading">
-        <SectionHeading id="projects-heading">Selected projects</SectionHeading>
+      <section aria-labelledby="projects-heading" className="mt-10">
+        <h2
+          id="projects-heading"
+          className="text-title-sm font-bold tracking-[-0.04em] text-ink md:text-[2rem] md:leading-[2.25rem]"
+        >
+          Selected work
+        </h2>
 
         <StaggerGroup
-          className="mt-5 grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-8 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
           stagger={0.09}
         >
           {featuredProjects.map((project, index) => (
             <StaggerItem key={project.slug}>
-              <ProjectCard project={project} priority={index === 0} />
+              <ProjectCard project={project} priority={index === 0} variant="featured" />
             </StaggerItem>
           ))}
         </StaggerGroup>
 
-        <Reveal delay={0.2} className="mt-6">
+        <Reveal delay={0.2} className="mt-8">
           <Link
             href="/projects"
             className="text-label text-ink-2 underline decoration-line-strong underline-offset-4 transition-colors hover:text-ink hover:decoration-current"
@@ -43,7 +48,7 @@ export default function HomePage() {
             All projects
           </Link>
         </Reveal>
-      </SectionFrame>
+      </section>
 
       <section aria-labelledby="thinking-heading" className="mt-10">
         <SectionHeading id="thinking-heading">Thinking</SectionHeading>

@@ -14,8 +14,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} | ${site.role}`,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
   authors: [{ name: site.name, url: site.url }],
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name} | ${site.role}`,
     description: site.description,
     url: site.url,
     images: [
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: `${site.name} — ${site.role}`,
+        alt: `${site.name} | ${site.role}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.role}`,
+    title: `${site.name} | ${site.role}`,
     description: site.description,
     images: ["/images/og.png"],
   },
@@ -69,7 +69,7 @@ const personSchema = {
   },
   alumniOf: {
     "@type": "CollegeOrUniversity",
-    name: "Birla Institute of Technology and Science, Pilani — Goa Campus",
+    name: "Birla Institute of Technology and Science, Pilani, Goa Campus",
   },
   worksFor: {
     "@type": "Organization",
