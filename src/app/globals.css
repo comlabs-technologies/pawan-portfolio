@@ -190,6 +190,31 @@
     inset 0 -10px 14px -14px var(--shade);
 }
 
+@utility edge-fade {
+  --edge-fade: linear-gradient(
+    to right,
+    transparent 0,
+    #000 8%,
+    #000 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--edge-fade);
+  mask-image: var(--edge-fade);
+}
+
+@utility marquee-track {
+  animation: testimonial-scroll 68s linear infinite;
+}
+
+@keyframes testimonial-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 @keyframes dot-pulse {
   0%, 100% {
     opacity: 0.35;
@@ -211,6 +236,7 @@
     scroll-behavior: auto;
   }
 
+  .marquee-track,
   .decor-dot {
     animation: none !important;
   }
