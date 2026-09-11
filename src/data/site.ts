@@ -9,13 +9,21 @@ export type SocialLink = {
   icon: "x" | "linkedin" | "github";
 };
 
-export const site = {
+export const profile = {
   name: "Pawan Mishra",
+  role: "Frontend Engineer & Product Builder",
+  image:
+    "https://media.licdn.com/dms/image/v2/D4D03AQGjzZ4jWrOyzQ/profile-displayphoto-scale_200_200/B4DZ5ZFUpXHgAc-/0/1779611028977?e=1790812800&v=beta&t=Z-r4LV9NK3mO0e7uaGiWRvK7mOLTlEOWhjel00hRjuA",
+} as const;
+
+export const site = {
+  name: profile.name,
   shortName: "Pawan",
-  role: "Software Engineer",
+  role: profile.role,
+  image: profile.image,
   /** Cycled by the rotating badge next to the name. */
   roles: [
-    "Software Engineer",
+    "Frontend Engineer & Product Builder",
     "Full Stack Engineer",
     "Frontend Engineer",
     "Product Engineer",
@@ -24,7 +32,6 @@ export const site = {
   headline: "Building what actually moves businesses: Interfaces to AI workflows",
   location: "Pune, Maharashtra, India",
   url: "https://pawan-ivory.vercel.app",
-  avatar: "/images/people/pawan.png",
   intro:
     "I build the interfaces and technical workflows that move businesses forward — from polished product experiences to cloud-backed operational systems.",
   aboutIntro:
@@ -32,7 +39,7 @@ export const site = {
   availability:
     "I work with founders and business teams on interfaces, workflows and production systems. If you have a process that needs to become software, send me a note.",
   description:
-    "Pawan Mishra is a product-minded software engineer in Pune, working across frontend engineering, full-stack development, cloud infrastructure and product discovery.",
+    "Pawan Mishra is a frontend engineer and product builder in Pune, working across product experiences, web development and founder-led digital products.",
 } as const;
 
 export const navItems: NavItem[] = [

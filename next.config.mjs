@@ -3,6 +3,12 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.licdn.com",
+      },
+    ],
   },
   async redirects() {
     // The blog was replaced by /thinking; keep old links working.

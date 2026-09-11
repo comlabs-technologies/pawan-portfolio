@@ -85,19 +85,19 @@ export function FloatingNavbar() {
         >
           <span
             className={cn(
-              "relative block size-8 overflow-hidden rounded-full ring-1 ring-[var(--image-ring)]",
-              "transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+              "relative block size-8 aspect-square overflow-hidden rounded-full ring-1 ring-[var(--image-ring)] shadow-none",
+              "transition-[transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
               "group-hover:scale-[1.02] group-hover:ring-[var(--border-strong)]",
               "group-focus-visible:scale-[1.02]",
             )}
           >
             <Image
-              src={site.avatar}
+              src={site.image}
               alt=""
               fill
               sizes="32px"
               priority
-              className="object-cover"
+              className="aspect-square object-cover"
             />
           </span>
         </Link>
