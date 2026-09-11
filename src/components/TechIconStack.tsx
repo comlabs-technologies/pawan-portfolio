@@ -1,5 +1,6 @@
 import { techMarks, type TechKey } from "@/data/tech";
 import { cn } from "@/lib/utils";
+import { BrandIcon } from "./BrandIcon";
 
 type TechIconStackProps = {
   items: TechKey[];
@@ -19,27 +20,30 @@ export function TechIconStack({
     <ul className={cn("flex items-center", className)}>
       {items.map((key, index) => {
         const mark = techMarks[key];
+        const pixel = size === "sm" ? 12 : 14;
         return (
           <li
             key={key}
             style={{ "--i": index } as React.CSSProperties}
             className={cn(
-              "grid place-items-center rounded-full ring-2 ring-content",
+              "grid place-items-center rounded-full bg-content ring-2 ring-content",
               "transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-              size === "sm" ? "size-5 text-[8px]" : "size-6 text-[9px]",
+              size === "sm" ? "size-5" : "size-6",
               index > 0 && (size === "sm" ? "-ml-1.5" : "-ml-2"),
               spreadOnGroupHover &&
                 "group-hover:translate-x-[calc(var(--i)*1.5px)] group-focus-visible:translate-x-[calc(var(--i)*1.5px)]",
             )}
+            title={mark.label}
           >
-            <span
-              className="grid size-full place-items-center rounded-full font-semibold tracking-tight"
-              style={{ backgroundColor: mark.bg, color: mark.fg }}
-              title={mark.label}
-            >
-              <span className="sr-only">{mark.label}</span>
-              <span aria-hidden="true">{mark.short}</span>
-            </span>
+            <span className="sr-only">{mark.label}</span>
+            <BrandIcon
+              src={mark.icon}
+              label={mark.label}
+              invertInDark={mark.invertInDark}
+              size={pixel}
+              decorative
+              className={size === "sm" ? "size-3" : "size-3.5"}
+            />
           </li>
         );
       })}

@@ -52,7 +52,7 @@ export function FloatingNavbar() {
         className={cn(
           "pointer-events-none absolute inset-x-0 top-0 -z-10 h-20",
           "bg-linear-to-b from-content via-content/80 to-transparent",
-          "transition-opacity duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+          "transition-opacity duration-[200ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
           floating ? "opacity-100" : "opacity-0",
         )}
       />
@@ -64,7 +64,7 @@ export function FloatingNavbar() {
           /* Explicitly listed properties only — never `transition: all`. */
           transitionProperty:
             "width, border-radius, translate, box-shadow, background-color, backdrop-filter",
-          transitionDuration: "420ms",
+          transitionDuration: "200ms",
           transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
         }}
         className={cn(
@@ -133,7 +133,7 @@ export function FloatingNavbar() {
                           aria-hidden="true"
                           layoutId="nav-active"
                           className="absolute inset-0 rounded-full bg-muted"
-                          transition={{ duration: 0.42, ease: EASE }}
+                          transition={{ duration: 0.18, ease: EASE }}
                         />
                       )
                     ) : null}

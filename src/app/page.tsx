@@ -7,6 +7,7 @@ import { NoteRow } from "@/components/NoteRow";
 import { ExperienceItem } from "@/components/ExperienceItem";
 import { OutcomeCards } from "@/components/OutcomeCards";
 import { EmailEnquiry } from "@/components/EmailEnquiry";
+import { TechMarquee } from "@/components/TechMarquee";
 import { Reveal } from "@/components/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/StaggerGroup";
 import { featuredProjects } from "@/data/projects";
@@ -82,6 +83,13 @@ export default function HomePage() {
       <section aria-labelledby="outcomes-heading" className="mt-10">
         <SectionHeading id="outcomes-heading">Selected outcomes</SectionHeading>
         <OutcomeCards />
+      </section>
+
+      <section aria-labelledby="tech-heading" className="mt-12">
+        <SectionHeading id="tech-heading">Tech Stack and Tools</SectionHeading>
+        <div className="mt-5 -mx-4 md:-mx-8">
+          <TechMarquee />
+        </div>
       </section>
 
       <section aria-labelledby="contact-heading" className="mt-12">

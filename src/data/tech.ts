@@ -1,4 +1,21 @@
-/** Technology marks are drawn as original monogram glyphs, never vendor artwork. */
+export const techIcons = {
+  nextjs: "https://cdn.simpleicons.org/nextdotjs/000000",
+  react: "https://cdn.simpleicons.org/react/61DAFB",
+  typescript: "https://cdn.simpleicons.org/typescript/3178C6",
+  mongodb: "https://cdn.simpleicons.org/mongodb/47A248",
+  aws: "https://cdn.simpleicons.org/amazonwebservices/FF9900",
+  docker: "https://cdn.simpleicons.org/docker/2496ED",
+  kubernetes: "https://cdn.simpleicons.org/kubernetes/326CE5",
+  javascript: "https://cdn.simpleicons.org/javascript/F7DF1E",
+  nodejs: "https://cdn.simpleicons.org/nodedotjs/5FA04E",
+  sql: "https://cdn.simpleicons.org/postgresql/4169E1",
+  claude: "https://cdn.simpleicons.org/claude/D97757",
+  chatgpt: "https://cdn.simpleicons.org/openai/412991",
+  cursor: "https://cdn.simpleicons.org/cursor/000000",
+} as const;
+
+export type TechIconKey = keyof typeof techIcons;
+
 export type TechKey =
   | "typescript"
   | "javascript"
@@ -15,24 +32,50 @@ export type TechKey =
 
 export type TechMark = {
   label: string;
-  short: string;
-  /** Background of the circular chip. */
-  bg: string;
-  /** Foreground of the monogram. */
-  fg: string;
+  icon: string;
+  invertInDark?: boolean;
 };
 
+const extraIcons = {
+  tailwind: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+  shopify: "https://cdn.simpleicons.org/shopify/7AB55C",
+  vercel: "https://cdn.simpleicons.org/vercel/000000",
+  express: "https://cdn.simpleicons.org/express/000000",
+  figma: "https://cdn.simpleicons.org/figma/F24E1E",
+} as const;
+
 export const techMarks: Record<TechKey, TechMark> = {
-  typescript: { label: "TypeScript", short: "TS", bg: "#2f6fd0", fg: "#ffffff" },
-  javascript: { label: "JavaScript", short: "JS", bg: "#c9a227", fg: "#241c05" },
-  react: { label: "React", short: "Re", bg: "#149eca", fg: "#04212b" },
-  next: { label: "Next.js", short: "N", bg: "#111111", fg: "#ffffff" },
-  tailwind: { label: "Tailwind CSS", short: "Tw", bg: "#2eb3c4", fg: "#04262b" },
-  node: { label: "Node.js", short: "No", bg: "#3f8f47", fg: "#f2fbf3" },
-  express: { label: "Express", short: "Ex", bg: "#4a4a4a", fg: "#f5f5f5" },
-  mongodb: { label: "MongoDB", short: "Mo", bg: "#3d7a45", fg: "#eefaef" },
-  aws: { label: "AWS", short: "Aw", bg: "#8a5a1f", fg: "#fff3e0" },
-  shopify: { label: "Shopify", short: "Sh", bg: "#4a7c33", fg: "#f1fae8" },
-  vercel: { label: "Vercel", short: "Ve", bg: "#171717", fg: "#fafafa" },
-  figma: { label: "Figma", short: "Fg", bg: "#a259ff", fg: "#ffffff" },
+  typescript: { label: "TypeScript", icon: techIcons.typescript },
+  javascript: { label: "JavaScript", icon: techIcons.javascript },
+  react: { label: "React", icon: techIcons.react },
+  next: { label: "Next.js", icon: techIcons.nextjs, invertInDark: true },
+  tailwind: { label: "Tailwind CSS", icon: extraIcons.tailwind },
+  node: { label: "Node.js", icon: techIcons.nodejs },
+  express: { label: "Express", icon: extraIcons.express, invertInDark: true },
+  mongodb: { label: "MongoDB", icon: techIcons.mongodb },
+  aws: { label: "AWS", icon: techIcons.aws },
+  shopify: { label: "Shopify", icon: extraIcons.shopify },
+  vercel: { label: "Vercel", icon: extraIcons.vercel, invertInDark: true },
+  figma: { label: "Figma", icon: extraIcons.figma },
 };
+
+export const techIconItems: {
+  key: TechIconKey;
+  label: string;
+  src: string;
+  invertInDark?: boolean;
+}[] = [
+  { key: "nextjs", label: "Next.js", src: techIcons.nextjs, invertInDark: true },
+  { key: "react", label: "React", src: techIcons.react },
+  { key: "typescript", label: "TypeScript", src: techIcons.typescript },
+  { key: "javascript", label: "JavaScript", src: techIcons.javascript },
+  { key: "nodejs", label: "Node.js", src: techIcons.nodejs },
+  { key: "mongodb", label: "MongoDB", src: techIcons.mongodb },
+  { key: "aws", label: "AWS", src: techIcons.aws },
+  { key: "docker", label: "Docker", src: techIcons.docker },
+  { key: "kubernetes", label: "Kubernetes", src: techIcons.kubernetes },
+  { key: "sql", label: "PostgreSQL", src: techIcons.sql },
+  { key: "claude", label: "Claude", src: techIcons.claude },
+  { key: "chatgpt", label: "ChatGPT", src: techIcons.chatgpt },
+  { key: "cursor", label: "Cursor", src: techIcons.cursor, invertInDark: true },
+];
