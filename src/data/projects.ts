@@ -1,5 +1,13 @@
 import type { TechKey } from "./tech";
 
+export type ProjectPreview = {
+  top: string;
+  left: string;
+  width: string;
+  blank?: boolean;
+  placeholderColor?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -12,6 +20,7 @@ export type Project = {
   context: string;
   stack: TechKey[];
   featured?: boolean;
+  preview?: ProjectPreview;
 };
 
 export const projects: Project[] = [
@@ -20,11 +29,16 @@ export const projects: Project[] = [
     title: "Cleanly",
     description:
       "A streamlined home-services platform that turns service discovery, scheduling and booking management into one clear customer journey.",
-    image: "/images/projects/cleanly.png",
-    alt: "Cleanly homepage with a live product demo of the customer dashboard",
+    image: "/images/projects/cleanly-preview.png",
+    alt: "Cleanly product interface showing account balances and digital assets",
     context: "Product Design & Development",
     stack: ["next", "react", "typescript"],
     featured: true,
+    preview: {
+      top: "10%",
+      left: "5%",
+      width: "108%",
+    },
   },
   {
     slug: "comlabs-technologies",
@@ -32,25 +46,37 @@ export const projects: Project[] = [
     description:
       "Built the digital presence and product direction for a technology partner delivering application support, AWS cloud, AI agents and custom software engineering.",
     image: "/images/projects/comlabs.png",
-    alt: "Comlabs Technologies homepage introducing application, cloud and AI services",
+    alt: "Comlabs Technologies homepage preview",
     href: "https://www.comlabstechnologies.com/",
     external: true,
     context: "Technology Company · Founder",
     stack: ["next", "react", "aws"],
     featured: true,
+    preview: {
+      top: "6%",
+      left: "6%",
+      width: "105%",
+      blank: true,
+      placeholderColor: "#efb7b7",
+    },
   },
   {
     slug: "humanmadelogic",
     title: "HumanMadeLogic",
     description:
       "Rebuilt a WordPress marketing website in Next.js with sharper positioning, improved performance and a cleaner conversion-focused experience.",
-    image: "/images/projects/humanmadelogic.png",
-    alt: "HumanMadeLogic homepage with the headline We make brands impossible to ignore",
+    image: "/images/projects/humanmadelogic-preview.png",
+    alt: "HumanMadeLogic homepage with layered brand visuals and bold positioning",
     href: "https://humanmadelogic.vercel.app/",
     external: true,
     context: "Website Redesign · Next.js",
     stack: ["next", "react", "tailwind"],
     featured: true,
+    preview: {
+      top: "6%",
+      left: "10%",
+      width: "112%",
+    },
   },
 ];
 
