@@ -2,13 +2,16 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { EASE } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 
 export function PageHeader({
   title,
   description,
+  className,
 }: {
   title: string;
-  description: string;
+  description?: React.ReactNode;
+  className?: string;
 }) {
   const reduced = useReducedMotion();
 
@@ -22,16 +25,18 @@ export function PageHeader({
         };
 
   return (
-    <header className="pt-2">
+    <header className={cn("pt-2", className)}>
       <motion.h1
-        className="title-shadow text-title-sm font-bold tracking-[-0.04em] text-ink md:text-title"
+        className="heading-display text-title-sm md:text-title"
         {...enter(0)}
       >
         {title}
       </motion.h1>
-      <motion.p className="mt-3 max-w-[58ch] text-body text-ink-2" {...enter(0.12)}>
-        {description}
-      </motion.p>
+      {description ? (
+        <motion.div className="mt-3 max-w-[58ch] text-body text-ink-2" {...enter(0.12)}>
+          {description}
+        </motion.div>
+      ) : null}
     </header>
   );
 }

@@ -21,7 +21,7 @@ export function Hero() {
     <header className="pt-1">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
         <motion.h1
-          className="text-[2rem] font-bold leading-[2.25rem] tracking-[-0.04em] text-ink md:text-[2.5rem] md:leading-[2.75rem]"
+          className="heading-display text-[2rem] leading-[2.25rem] md:text-[2.5rem] md:leading-[2.75rem]"
           {...enter(0)}
         >
           {site.name}

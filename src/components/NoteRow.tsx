@@ -38,7 +38,7 @@ export function NoteRow({
       <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
         <h3
           className={cn(
-            "text-label font-semibold text-ink-2",
+            "text-label font-semibold text-ink",
             "transition-[color,transform] duration-[180ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
             "group-hover:translate-x-0.5 group-hover:text-ink",
             "group-focus-visible:translate-x-0.5 group-focus-visible:text-ink",
