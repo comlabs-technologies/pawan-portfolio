@@ -45,8 +45,8 @@ export const projects: Project[] = [
     title: "Comlabs Technologies",
     description:
       "Built the digital presence and product direction for a technology partner delivering application support, AWS cloud, AI agents and custom software engineering.",
-    image: "/images/projects/comlabs.png",
-    alt: "Comlabs Technologies homepage preview",
+    image: "/images/projects/comlabs-preview.png",
+    alt: "Comlabs Technologies homepage with hero messaging and mountain backdrop",
     href: "https://www.comlabstechnologies.com/",
     external: true,
     context: "Technology Company · Founder",
@@ -56,8 +56,6 @@ export const projects: Project[] = [
       top: "6%",
       left: "6%",
       width: "108%",
-      blank: true,
-      placeholderColor: "#efb7b7",
     },
   },
   {
