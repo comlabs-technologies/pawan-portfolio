@@ -65,7 +65,7 @@ function ProjectCardBody({
     <>
       <div
         className={cn(
-          "relative aspect-16/10 w-full overflow-hidden rounded-xl ring-1 ring-[var(--image-ring)]",
+          "relative w-full overflow-hidden rounded-xl bg-muted ring-1 ring-[var(--image-ring)]",
           "transition-[box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
           linked && "group-hover:ring-[var(--border-strong)]",
         )}
@@ -73,14 +73,12 @@ function ProjectCardBody({
         <Image
           src={project.image}
           alt={project.alt}
-          fill
+          width={1896}
+          height={902}
           priority={priority}
           loading={priority ? undefined : "lazy"}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 280px"
-          className={cn(
-            "object-cover transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-            linked && "group-hover:scale-[1.02] group-focus-visible:scale-[1.02]",
-          )}
+          className="h-auto w-full object-contain"
         />
       </div>
 
