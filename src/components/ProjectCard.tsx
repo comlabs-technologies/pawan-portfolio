@@ -33,7 +33,11 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const featured = variant === "featured";
   const body = <ProjectCardBody project={project} priority={priority} featured={featured} />;
-  const classes = cn(featured ? "group flex h-full flex-col" : shell, !featured && interactive, className);
+  const classes = cn(
+    featured ? "group flex h-full flex-col" : shell,
+    !featured && interactive,
+    className,
+  );
 
   if (!project.href) {
     return <article className={classes}>{body}</article>;
@@ -54,6 +58,54 @@ export function ProjectCard({
   );
 }
 
+function FeaturedPreview({
+  project,
+  priority,
+}: {
+  project: Project;
+  priority: boolean;
+}) {
+  const preview = project.preview ?? { top: "6%", left: "6%", width: "108%" };
+
+  return (
+    <div className="relative aspect-[10/11] w-full overflow-hidden rounded-[1.25rem] bg-[#0a0a0a]">
+      {preview.blank ? (
+        <div
+          aria-hidden="true"
+          className="absolute rounded-xl"
+          style={{
+            top: preview.top,
+            left: preview.left,
+            width: preview.width,
+            height: "88%",
+            backgroundColor: preview.placeholderColor ?? "#efb7b7",
+          }}
+        />
+      ) : (
+        <div
+          className="absolute overflow-hidden rounded-xl shadow-[0_10px_28px_rgba(0,0,0,0.38)]"
+          style={{
+            top: preview.top,
+            left: preview.left,
+            width: preview.width,
+          }}
+        >
+          <Image
+            src={project.image}
+            alt={project.alt}
+            width={700}
+            height={900}
+            priority={priority}
+            loading={priority ? undefined : "lazy"}
+            sizes="(max-width: 640px) 92vw, (max-width: 1024px) 45vw, 300px"
+            className="h-auto w-full"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ProjectCardBody({
   project,
   priority,
@@ -67,30 +119,28 @@ function ProjectCardBody({
 
   return (
     <>
-      <div
-        className={cn(
-          "relative flex w-full items-center justify-center overflow-hidden bg-[#0a0a0a]",
-          featured
-            ? "aspect-[10/11] rounded-[1.25rem]"
-            : "rounded-xl bg-muted ring-1 ring-[var(--image-ring)]",
-          !featured && linked && "group-hover:ring-[var(--border-strong)]",
-          "transition-[box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-        )}
-      >
-        <Image
-          src={project.image}
-          alt={project.alt}
-          width={1896}
-          height={902}
-          priority={priority}
-          loading={priority ? undefined : "lazy"}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 280px"
+      {featured ? (
+        <FeaturedPreview project={project} priority={priority} />
+      ) : (
+        <div
           className={cn(
-            "h-auto w-full object-contain",
-            featured && "max-h-[88%] max-w-[92%]",
+            "relative w-full overflow-hidden rounded-xl bg-muted ring-1 ring-[var(--image-ring)]",
+            linked && "group-hover:ring-[var(--border-strong)]",
+            "transition-[box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
           )}
-        />
-      </div>
+        >
+          <Image
+            src={project.image}
+            alt={project.alt}
+            width={1896}
+            height={902}
+            priority={priority}
+            loading={priority ? undefined : "lazy"}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 280px"
+            className="h-auto w-full object-contain"
+          />
+        </div>
+      )}
 
       <div className={cn("flex items-start justify-between gap-2", featured ? "mt-4" : "mt-3")}>
         <h3
