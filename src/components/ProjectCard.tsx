@@ -34,7 +34,7 @@ export function ProjectCard({
   const featured = variant === "featured";
   const body = <ProjectCardBody project={project} priority={priority} featured={featured} />;
   const classes = cn(
-    featured ? "group flex h-full flex-col overflow-visible" : shell,
+    featured ? "group flex h-full flex-col" : shell,
     !featured && interactive,
     className,
   );
@@ -68,7 +68,7 @@ function FeaturedPreview({
   const preview = project.preview ?? { top: "10%", left: "5%", width: "108%" };
 
   return (
-    <div className="relative aspect-[10/11] w-full overflow-visible rounded-[1.25rem] bg-[#0a0a0a]">
+    <div className="relative aspect-[10/11] w-full overflow-hidden rounded-[1.25rem] bg-[#0a0a0a]">
       {preview.blank ? (
         <div
           aria-hidden="true"
