@@ -55,7 +55,7 @@ export const projects: Project[] = [
     preview: {
       top: "6%",
       left: "6%",
-      width: "105%",
+      width: "108%",
       blank: true,
       placeholderColor: "#efb7b7",
     },
@@ -74,8 +74,8 @@ export const projects: Project[] = [
     featured: true,
     preview: {
       top: "6%",
-      left: "10%",
-      width: "112%",
+      left: "6%",
+      width: "108%",
     },
   },
 ];
