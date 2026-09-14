@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectSiteRow } from "@/components/ProjectSiteRow";
+import { Reveal } from "@/components/Reveal";
 import { StaggerGroup, StaggerItem } from "@/components/StaggerGroup";
 import { projects } from "@/data/projects";
+import { projectSiteLinks } from "@/data/project-sites";
 import { site } from "@/data/site";
 
 const description =
@@ -34,6 +37,16 @@ export default function ProjectsPage() {
           </StaggerItem>
         ))}
       </StaggerGroup>
+
+      <Reveal delay={0.12} className="mt-14">
+        <ul className="border-t border-line">
+          {projectSiteLinks.map((link) => (
+            <li key={link.href}>
+              <ProjectSiteRow link={link} />
+            </li>
+          ))}
+        </ul>
+      </Reveal>
     </>
   );
 }
