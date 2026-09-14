@@ -12,9 +12,9 @@ export const projectSiteLinks: ProjectSiteLink[] = [
     meta: "formial.in",
   },
   {
-    label: "Docrud.in",
-    href: "https://docrud.in",
-    meta: "docrud.in",
+    label: "Docrud.com",
+    href: "https://docrud.com",
+    meta: "docrud.com",
   },
   {
     label: "culinaapp.in",
