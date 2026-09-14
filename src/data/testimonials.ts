@@ -2,44 +2,44 @@ export type Testimonial = {
   quote: string;
   name: string;
   title: string;
-  avatar: string;
+  avatar?: string;
 };
 
-/** Fictional people at fictional companies. */
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Pawan rewrote a rendering path we had written off as impossible. The dashboard went from unusable to boring, which is the highest praise I have.",
-    name: "Nadia Oyelaran",
-    title: "VP Engineering, Northbeam Systems",
-    avatar: "/images/people/nadia-oyelaran.png",
+      "Pawan took ownership of complex product flows from onboarding and authentication to subscriptions and dashboard experiences. He consistently turned rough requirements into clean, usable interfaces while remaining thoughtful about edge cases and the overall user journey.",
+    name: "Jeet Patel",
+    title: "Founder, Formial Labs",
   },
   {
     quote:
-      "He asks the question everyone else is avoiding, then quietly ships the answer two days later. Our checkout numbers still reflect that quarter.",
-    name: "Ivan Brekke",
-    title: "Head of Product, Lumen Retail",
-    avatar: "/images/people/ivan-brekke.png",
+      "Pawan brought structure and clarity to our digital presence. He understood our business requirements, communicated confidently with stakeholders, and translated them into a polished website that we could confidently present to enterprise clients.",
+    name: "Pramod Mishra",
+    title: "Founder, Global Services",
   },
   {
     quote:
-      "The design system he built is the reason our team of six can ship like a team of twenty. Every token has a reason behind it.",
-    name: "Mira Halloran",
-    title: "Design Director, Orbit Foundry",
-    avatar: "/images/people/mira-halloran.png",
+      "Pawan doesn't approach work as someone who simply implements screens. He questions workflows, identifies usability gaps, and considers the wider product impact. That combination of engineering ability and product judgement made him a valuable collaborator.",
+    name: "Kushagra Sharma",
+    title: "Founder & CEO, Docrud",
   },
   {
     quote:
-      "I have reviewed a lot of pull requests. His read like documentation. Onboarding new engineers got noticeably faster.",
-    name: "Tomas Lindqvist",
-    title: "Principal Engineer, Cassette Labs",
-    avatar: "/images/people/tomas-lindqvist.png",
+      "What stood out about Pawan was his ability to move quickly without losing thoughtfulness. He understood the brand and business direction, then translated it into digital work that felt clear, modern, and purposeful.",
+    name: "Pragun Sharma",
+    title: "Founder & CMO, Culina",
   },
   {
     quote:
-      "We hired him for a three-week fix and kept him for a year. He left behind tests, notes, and a team that understood the system.",
-    name: "Ayesha Rahman",
-    title: "Founder, Foldwork Studio",
-    avatar: "/images/people/ayesha-rahman.png",
+      "Pawan was proactive, dependable, and easy to work with. He brought both technical execution and business understanding, responded well to feedback, and could be trusted to move work forward without constant supervision.",
+    name: "Harsh Sihag",
+    title: "Director, Vithub",
+  },
+  {
+    quote:
+      "Pawan understood the personality we wanted Human Made Logic to convey and translated it into a distinctive digital experience. He combined strong frontend execution with thoughtful design judgement, giving the brand a website that feels more confident, memorable, and aligned with our work.",
+    name: "Ashish",
+    title: "Human Made Logic",
   },
 ];
