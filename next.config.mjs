@@ -10,6 +10,10 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "formial.in",
+      },
+      {
+        protocol: "https",
         hostname: "cdn.simpleicons.org",
       },
       {
